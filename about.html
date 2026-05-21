@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — MELLERMA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--blk:#060606;--wht:#f0ece4;--cream:#cec5b0;--gold:#b8943f;--goldl:#d4af6a;--red:#8b0000;--grey:#161616;--mgrey:#2a2a2a;--tgrey:#777;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--blk);color:var(--wht);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-thumb{background:var(--gold);}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:rgba(6,6,6,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(184,148,63,.15);}
+.nav-logo{font-family:'Cinzel',serif;font-size:20px;font-weight:900;letter-spacing:.3em;color:var(--wht);text-decoration:none;}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--tgrey);text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--goldl);}
+.nav-cta{font-size:10px;letter-spacing:.2em;text-transform:uppercase;padding:9px 22px;border:1px solid rgba(184,148,63,.4);color:var(--goldl);text-decoration:none;transition:all .2s;}
+.nav-cta:hover{background:var(--gold);color:var(--blk);border-color:var(--gold);}
+
+/* HERO */
+.about-hero{padding:140px 48px 80px;background:linear-gradient(180deg,#0a0a00 0%,var(--blk) 100%);position:relative;overflow:hidden;}
+.about-hero::before{content:'MELLERMA';position:absolute;font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,16vw,220px);color:rgba(255,255,255,.018);bottom:20px;right:0;pointer-events:none;letter-spacing:.05em;white-space:nowrap;}
+.ah-label{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.ah-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,9vw,120px);line-height:.9;letter-spacing:.04em;margin-bottom:24px;max-width:700px;}
+.ah-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,2.5vw,28px);color:var(--goldl);max-width:580px;line-height:1.4;letter-spacing:.04em;}
+
+/* MISSION */
+.mission{padding:90px 48px;display:grid;grid-template-columns:1fr 1fr;gap:80px;max-width:1200px;margin:0 auto;align-items:center;}
+.mission-text .label{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.mission-text h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,5.5vw,72px);line-height:.95;letter-spacing:.04em;margin-bottom:28px;}
+.mission-text p{font-size:15px;line-height:2;color:var(--cream);font-weight:300;margin-bottom:20px;}
+.mission-img{position:relative;}
+.mission-img img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;}
+.mission-img-caption{position:absolute;bottom:0;left:0;right:0;padding:20px 24px;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 100%);}
+.mission-img-caption span{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--goldl);}
+
+/* VALUES */
+.values{padding:80px 48px;background:var(--grey);}
+.values-inner{max-width:1200px;margin:0 auto;}
+.v-header{text-align:center;margin-bottom:64px;}
+.v-header .label{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.v-header h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,6vw,80px);line-height:1;letter-spacing:.05em;}
+.values-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;}
+.v-item{background:var(--blk);padding:44px 40px;position:relative;overflow:hidden;transition:background .3s;}
+.v-item:hover{background:#0e0e0e;}
+.v-item::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--gold);}
+.v-num{font-family:'Cormorant Garamond',serif;font-size:52px;color:rgba(184,148,63,.15);line-height:1;margin-bottom:8px;}
+.v-title{font-family:'Cinzel',serif;font-size:16px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;margin-bottom:14px;}
+.v-text{font-size:14px;color:var(--cream);line-height:1.85;font-weight:300;}
+
+/* MANIFESTO FULL */
+.manifesto-full{padding:90px 48px;text-align:center;position:relative;overflow:hidden;}
+.mf-big{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,4.5vw,58px);line-height:1.05;max-width:900px;margin:0 auto 0;letter-spacing:.03em;}
+.mf-big span{color:var(--goldl);}
+
+/* COMMUNITY */
+.community{padding:80px 48px;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.comm-imgs{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:3px;}
+.comm-img{overflow:hidden;}
+.comm-img img{width:100%;height:100%;object-fit:cover;display:block;aspect-ratio:3/4;transition:transform .5s;}
+.comm-img:hover img{transform:scale(1.04);}
+.comm-img:first-child{grid-column:span 2;aspect-ratio:auto;}
+.comm-img:first-child img{aspect-ratio:16/7;}
+.comm-text .label{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.comm-text h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,5vw,68px);line-height:.95;letter-spacing:.04em;margin-bottom:24px;}
+.comm-text p{font-size:14px;line-height:2;color:var(--cream);font-weight:300;margin-bottom:20px;}
+.btn-p{display:inline-block;padding:14px 36px;background:var(--wht);color:var(--blk);font-size:10px;letter-spacing:.25em;text-transform:uppercase;text-decoration:none;font-weight:500;transition:all .25s;margin-top:8px;}
+.btn-p:hover{background:var(--goldl);}
+
+/* CONTACT */
+.contact-band{background:var(--grey);padding:64px 48px;text-align:center;}
+.cb-inner{max-width:540px;margin:0 auto;}
+.cb-inner .label{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.cb-inner h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,60px);letter-spacing:.05em;margin-bottom:18px;}
+.cb-inner p{font-size:14px;color:var(--cream);line-height:1.8;margin-bottom:32px;}
+.cb-links{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;}
+.cb-link{padding:12px 28px;border:1px solid rgba(240,236,228,.2);color:var(--cream);text-decoration:none;font-size:10px;letter-spacing:.2em;text-transform:uppercase;transition:all .25s;}
+.cb-link:hover{border-color:var(--gold);color:var(--gold);}
+
+footer{background:#030303;border-top:1px solid rgba(255,255,255,.06);padding:52px 48px 28px;}
+.footer-grid{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+.f-brand h3{font-family:'Cinzel',serif;font-size:18px;font-weight:900;letter-spacing:.3em;margin-bottom:14px;}
+.f-brand p{font-size:12px;color:#444;line-height:1.9;max-width:260px;}
+.f-col h4{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.f-col ul{list-style:none;}.f-col ul li{margin-bottom:9px;}
+.f-col ul li a{font-size:11px;color:#444;text-decoration:none;transition:color .2s;}
+.f-col ul li a:hover{color:var(--wht);}
+.footer-bot{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid rgba(255,255,255,.06);}
+.footer-bot p{font-size:9px;color:#2a2a2a;letter-spacing:.1em;}
+.footer-soc{display:flex;gap:18px;}
+.footer-soc a{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#333;text-decoration:none;transition:color .2s;}
+.footer-soc a:hover{color:var(--gold);}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .8s,transform .8s;}
+.reveal.vis{opacity:1;transform:translateY(0);}
+@media(max-width:768px){
+  nav{padding:15px 20px;}.nav-links{display:none;}
+  .about-hero{padding:120px 20px 60px;}
+  .mission{grid-template-columns:1fr;padding:70px 20px;gap:44px;}
+  .values{padding:60px 20px;}
+  .values-grid{grid-template-columns:1fr;}
+  .manifesto-full{padding:70px 20px;}
+  .community{grid-template-columns:1fr;padding:70px 20px;gap:44px;}
+  .contact-band{padding:60px 20px;}
+  footer{padding:48px 20px 20px;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:28px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">MELLERMA</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+  </ul>
+  <a href="shop.html" class="nav-cta">Shop Now</a>
+</nav>
+
+<div class="about-hero" id="story">
+  <p class="ah-label">The Movement · Est. 2025</p>
+  <h1 class="ah-title">NOT MADE TO FOLLOW TRENDS</h1>
+  <p class="ah-sub">"Made to create our own lane. Lowkey movement. High ambition."</p>
+</div>
+
+<!-- MISSION -->
+<section class="mission">
+  <div class="mission-text reveal">
+    <div class="label">Who We Are</div>
+    <h2>THE MELLERMA MOVEMENT</h2>
+    <p>Mellerma started with a simple belief: clothing can carry a message. Not a brand built for hype — built for the ones who move with purpose, who build from nothing, and who stay solid through pressure.</p>
+    <p>We come from different backgrounds. Different cities. Different struggles. But we move as one. That's Mellerma. A unified mindset — worn by those who choose to create their own lane.</p>
+    <p>Every piece is made with intention. Premium materials. Meaningful design. Nothing generic. Nothing trend-chasing. Just real, heavy quality built to last.</p>
+  </div>
+  <div class="mission-img reveal">
+    <img src="img-tee-model-front.jpg" alt="Mellerma Movement">
+    <div class="mission-img-caption">
+      <span>"Just Getting Started ✊"</span>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values" id="values">
+  <div class="values-inner">
+    <div class="v-header reveal">
+      <div class="label">What We Stand For</div>
+      <h2>FOUR PILLARS</h2>
+    </div>
+    <div class="values-grid reveal">
+      <div class="v-item">
+        <div class="v-num">01</div>
+        <div class="v-title">Unity</div>
+        <div class="v-text">We come from different backgrounds but move as one. Different cities, different stories — one mindset. Mellerma is for those who know that real strength is collective.</div>
+      </div>
+      <div class="v-item">
+        <div class="v-num">02</div>
+        <div class="v-title">Purpose</div>
+        <div class="v-text">Every move is intentional. We don't react — we build. Mellerma is worn by those who make decisions with direction, who know where they're going before they take a single step.</div>
+      </div>
+      <div class="v-item">
+        <div class="v-num">03</div>
+        <div class="v-title">Quality</div>
+        <div class="v-text">320 GSM heavyweight. Hand-placed rhinestones. 100% premium cotton. Nothing cheap, nothing rushed. Every piece is built to outlast the hype and still feel like new.</div>
+      </div>
+      <div class="v-item">
+        <div class="v-num">04</div>
+        <div class="v-title">Faith</div>
+        <div class="v-text">Trust God. Build from nothing. The crown, the cross, the thorns — sacred symbols worn by those who understand that pressure makes diamonds. Faith isn't decoration. It's foundation.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="manifesto-full">
+  <p style="font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;" class="reveal">Manifesto</p>
+  <div class="mf-big reveal">
+    MELLERMA IS FOR THE PEOPLE WHO<br>
+    <span>COME FROM DIFFERENT BACKGROUNDS</span><br>
+    BUT MOVE AS ONE —<br>
+    WHO <span>STAY SOLID THROUGH PRESSURE</span>,<br>
+    <span>BUILD FROM NOTHING</span>,<br>
+    AND MOVE WITH <span>PURPOSE.</span>
+  </div>
+</section>
+
+<!-- COMMUNITY -->
+<section class="community">
+  <div class="comm-imgs reveal">
+    <div class="comm-img"><img src="img-tee-model-back.jpg" alt="Model wearing Trust God Tee back"></div>
+    <div class="comm-img"><img src="img-pants-front.png" alt="Thorns and Steel Sweatpants"></div>
+    <div class="comm-img"><img src="img-tee-back-print.jpg" alt="Trust God back print detail"></div>
+  </div>
+  <div class="comm-text reveal">
+    <div class="label">The Collection</div>
+    <h2>DROP 001 IS HERE</h2>
+    <p>Two pieces. Both built with intention. The Trust God Tee carries the Crown of Thorns on its back — a reminder that pressure is part of the process. The Thorns &amp; Steel Sweats bring a hand-rhinestoned sword through roses to your silhouette.</p>
+    <p>Merch dropping soon. This is just the beginning. Get notified and be first in line.</p>
+    <a href="shop.html" class="btn-p">Shop the Drop</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-band">
+  <div class="cb-inner reveal">
+    <div class="label">Get In Touch</div>
+    <h2>REACH OUT</h2>
+    <p>Have a question, collab idea, or just want to connect? Reach us directly — we move as a community.</p>
+    <div class="cb-links">
+      <a href="mailto:mellerma_wrld2026@gmail.com" class="cb-link">📧 Email Us</a>
+      <a href="https://www.instagram.com/mellerma.wrld" target="_blank" class="cb-link">📷 Instagram</a>
+      <a href="#" class="cb-link">🎵 TikTok</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="f-brand"><h3>MELLERMA</h3><p>A unified mindset. Not made to follow trends — made to create our own lane.</p></div>
+    <div class="f-col"><h4>Shop</h4><ul><li><a href="product-tee.html">Trust God Tee</a></li><li><a href="product-pants.html">Thorns &amp; Steel Sweats</a></li></ul></div>
+    <div class="f-col"><h4>Brand</h4><ul><li><a href="about.html">About</a></li><li><a href="index.html">Home</a></li></ul></div>
+    <div class="f-col"><h4>Contact</h4><ul><li><a href="https://www.instagram.com/mellerma.wrld" target="_blank">Instagram</a></li><li><a href="mailto:mellerma_wrld2026@gmail.com">Email Us</a></li></ul></div>
+  </div>
+  <div class="footer-bot">
+    <p>© 2025 Mellerma. All rights reserved.</p>
+    <div class="footer-soc"><a href="https://www.instagram.com/mellerma.wrld" target="_blank">Instagram</a><a href="#">TikTok</a></div>
+  </div>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

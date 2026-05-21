@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop — MELLERMA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--blk:#060606;--wht:#f0ece4;--cream:#cec5b0;--gold:#b8943f;--goldl:#d4af6a;--red:#8b0000;--grey:#161616;--mgrey:#2a2a2a;--tgrey:#777;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--blk);color:var(--wht);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-thumb{background:var(--gold);}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:rgba(6,6,6,0.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(184,148,63,0.15);}
+.nav-logo{font-family:'Cinzel',serif;font-size:20px;font-weight:900;letter-spacing:0.3em;color:var(--wht);text-decoration:none;}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--tgrey);text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--goldl);}
+.nav-cta{font-size:10px;letter-spacing:.2em;text-transform:uppercase;padding:9px 22px;border:1px solid rgba(184,148,63,0.4);color:var(--goldl);text-decoration:none;transition:all .2s;}
+.nav-cta:hover{background:var(--gold);color:var(--blk);border-color:var(--gold);}
+
+.page-header{padding:140px 48px 60px;background:linear-gradient(180deg,#0a0000 0%,var(--blk) 100%);text-align:center;position:relative;overflow:hidden;}
+.page-header::before{content:'SHOP';position:absolute;font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,16vw,220px);color:rgba(255,255,255,.02);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;letter-spacing:.05em;white-space:nowrap;}
+.ph-label{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.ph-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,8vw,100px);line-height:.9;letter-spacing:.05em;margin-bottom:16px;}
+.ph-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--cream);letter-spacing:.1em;}
+
+.mq{overflow:hidden;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);background:var(--grey);padding:12px 0;}
+.mq-track{display:flex;animation:mq 22s linear infinite;white-space:nowrap;width:max-content;}
+.mq-item{font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);padding:0 36px;}
+.mq-sep{color:var(--red);padding:0 8px;}
+@keyframes mq{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+.shop-section{padding:80px 48px;max-width:1300px;margin:0 auto;}
+.shop-intro{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px;border-bottom:1px solid var(--mgrey);padding-bottom:24px;}
+.si-left .label{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.si-left h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(38px,5vw,64px);line-height:1;letter-spacing:.05em;}
+.si-right{font-size:10px;letter-spacing:.15em;color:var(--tgrey);text-transform:uppercase;}
+
+.shop-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:3px;}
+
+.p-card{position:relative;background:var(--grey);overflow:hidden;text-decoration:none;color:inherit;display:block;}
+.p-card-img{overflow:hidden;background:#111;position:relative;}
+.p-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.25,.46,.45,.94),filter .4s;display:block;}
+.p-card:hover .p-card-img img{transform:scale(1.05);filter:brightness(1.05);}
+.p-badge{position:absolute;top:16px;left:16px;background:var(--red);color:#fff;font-size:8px;letter-spacing:.2em;text-transform:uppercase;padding:4px 10px;z-index:2;}
+.p-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(6,6,6,.88) 0%,transparent 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:26px;}
+.p-name{font-family:'Cinzel',serif;font-size:17px;font-weight:700;letter-spacing:.08em;margin-bottom:3px;}
+.p-sub{font-size:9px;color:var(--cream);letter-spacing:.12em;margin-bottom:14px;}
+.p-cta{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--goldl);border-bottom:1px solid var(--goldl);padding-bottom:2px;display:inline-block;}
+.p-info{padding:16px 20px;background:var(--blk);border-top:1px solid var(--mgrey);display:flex;justify-content:space-between;align-items:center;}
+.p-info-name{font-family:'Cinzel',serif;font-size:13px;letter-spacing:.06em;}
+.p-info-sub{font-size:9px;color:var(--tgrey);letter-spacing:.08em;margin-top:3px;}
+.p-price{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--goldl);}
+
+/* SPECS BAND */
+.specs-band{background:var(--grey);padding:64px 48px;border-top:1px solid rgba(255,255,255,.06);}
+.sb-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;}
+.sb-item{padding:36px 30px;background:var(--blk);text-align:center;}
+.sb-num{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--gold);line-height:1;margin-bottom:8px;}
+.sb-label{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--cream);}
+.sb-sub{font-size:11px;color:var(--tgrey);margin-top:6px;line-height:1.5;}
+
+/* INSTAGRAM FEED */
+.insta-section{padding:80px 48px;max-width:1300px;margin:0 auto;}
+.insta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:40px;}
+.insta-item{aspect-ratio:1;overflow:hidden;background:#111;position:relative;}
+.insta-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s,filter .4s;filter:grayscale(20%);}
+.insta-item:hover img{transform:scale(1.06);filter:grayscale(0%);}
+.insta-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;}
+.insta-item:hover .insta-overlay{opacity:1;}
+.insta-overlay span{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--goldl);}
+
+/* FOOTER */
+footer{background:#030303;border-top:1px solid rgba(255,255,255,.06);padding:52px 48px 28px;}
+.footer-grid{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+.f-brand h3{font-family:'Cinzel',serif;font-size:18px;font-weight:900;letter-spacing:.3em;margin-bottom:14px;}
+.f-brand p{font-size:12px;color:#444;line-height:1.9;max-width:260px;}
+.f-col h4{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.f-col ul{list-style:none;}
+.f-col ul li{margin-bottom:9px;}
+.f-col ul li a{font-size:11px;color:#444;text-decoration:none;transition:color .2s;}
+.f-col ul li a:hover{color:var(--wht);}
+.footer-bot{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid rgba(255,255,255,.06);}
+.footer-bot p{font-size:9px;color:#2a2a2a;letter-spacing:.1em;}
+.footer-soc{display:flex;gap:18px;}
+.footer-soc a{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#333;text-decoration:none;transition:color .2s;}
+.footer-soc a:hover{color:var(--gold);}
+
+@media(max-width:768px){
+  nav{padding:15px 20px;}.nav-links{display:none;}
+  .page-header{padding:120px 20px 50px;}
+  .shop-section{padding:60px 20px;}
+  .shop-grid{grid-template-columns:1fr;}
+  .sb-inner{grid-template-columns:1fr 1fr;}
+  .insta-section{padding:60px 20px;}
+  .insta-grid{grid-template-columns:1fr 1fr;}
+  .specs-band{padding:50px 20px;}
+  footer{padding:48px 20px 20px;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:28px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">MELLERMA</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="shop.html" class="active">Shop</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <a href="mailto:mellerma_wrld2026@gmail.com" class="nav-cta">Contact</a>
+</nav>
+
+<div class="page-header">
+  <p class="ph-label">Collection 001 · Limited Drop</p>
+  <h1 class="ph-title">DEBUT<br>DROP</h1>
+  <p class="ph-sub">Sacred streetwear. Built different.</p>
+</div>
+
+<div class="mq">
+  <div class="mq-track">
+    <span class="mq-item">Lowkey Movement</span><span class="mq-sep">✦</span>
+    <span class="mq-item">Trust God</span><span class="mq-sep">✦</span>
+    <span class="mq-item">Thorns &amp; Steel</span><span class="mq-sep">✦</span>
+    <span class="mq-item">Unified Mindset</span><span class="mq-sep">✦</span>
+    <span class="mq-item">Premium 320 GSM</span><span class="mq-sep">✦</span>
+    <span class="mq-item">Hand-Placed Rhinestones</span><span class="mq-sep">✦</span>
+    <span class="mq-item">Build From Nothing</span><span class="mq-sep">✦</span>
+    <span class="mq-item">Move With Purpose</span><span class="mq-sep">✦</span>
+    <span class="mq-item">Lowkey Movement</span><span class="mq-sep">✦</span>
+    <span class="mq-item">Trust God</span><span class="mq-sep">✦</span>
+    <span class="mq-item">Thorns &amp; Steel</span><span class="mq-sep">✦</span>
+    <span class="mq-item">Unified Mindset</span><span class="mq-sep">✦</span>
+    <span class="mq-item">Premium 320 GSM</span><span class="mq-sep">✦</span>
+    <span class="mq-item">Hand-Placed Rhinestones</span><span class="mq-sep">✦</span>
+    <span class="mq-item">Build From Nothing</span><span class="mq-sep">✦</span>
+    <span class="mq-item">Move With Purpose</span><span class="mq-sep">✦</span>
+  </div>
+</div>
+
+<section class="shop-section">
+  <div class="shop-intro">
+    <div class="si-left">
+      <div class="label">Drop 001 · 2025</div>
+      <h2>ALL PIECES</h2>
+    </div>
+    <span class="si-right">2 Pieces Available</span>
+  </div>
+
+  <div class="shop-grid">
+    <!-- TEE -->
+    <a href="product-tee.html" class="p-card">
+      <div class="p-card-img" style="aspect-ratio:2/2.6;">
+        <img src="img-tee-model-front.jpg" alt="Trust God Tee — Front">
+        <div class="p-badge">New Drop</div>
+        <div class="p-overlay">
+          <div class="p-name">Trust God Tee</div>
+          <div class="p-sub">260gsm · 100% Cotton · Crown of Thorns Back Print</div>
+          <span class="p-cta">View &amp; Purchase →</span>
+        </div>
+      </div>
+      <div class="p-info">
+        <div>
+          <div class="p-info-name">Trust God Tee</div>
+          <div class="p-info-sub">Essential Unisex · 260 GSM</div>
+        </div>
+        <div class="p-price">$25</div>
+      </div>
+    </a>
+
+    <!-- PANTS -->
+    <a href="product-pants.html" class="p-card">
+      <div class="p-card-img" style="aspect-ratio:2/2.6;">
+        <img src="img-pants-front.png" alt="Thorns and Steel Sweatpants">
+        <div class="p-badge">Rhinestone Series</div>
+        <div class="p-overlay">
+          <div class="p-name">Thorns &amp; Steel Sweats</div>
+          <div class="p-sub">320gsm · 85% Cotton · Sword &amp; Roses Rhinestone</div>
+          <span class="p-cta">View &amp; Purchase →</span>
+        </div>
+      </div>
+      <div class="p-info">
+        <div>
+          <div class="p-info-name">Thorns &amp; Steel Sweats</div>
+          <div class="p-info-sub">Straight Leg Unisex · 320 GSM</div>
+        </div>
+        <div class="p-price">$35</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- SPECS -->
+<div class="specs-band">
+  <div class="sb-inner">
+    <div class="sb-item"><div class="sb-num">320</div><div class="sb-label">GSM Weight</div><div class="sb-sub">Heavyweight premium blend</div></div>
+    <div class="sb-item"><div class="sb-num">100%</div><div class="sb-label">Cotton Tee</div><div class="sb-sub">260gsm unisex construction</div></div>
+    <div class="sb-item"><div class="sb-num">∞</div><div class="sb-label">Rhinestones</div><div class="sb-sub">Hand-placed, premium finish</div></div>
+    <div class="sb-item"><div class="sb-num">2</div><div class="sb-label">Drop 001 Pieces</div><div class="sb-sub">Limited quantities only</div></div>
+  </div>
+</div>
+
+<!-- INSTAGRAM GRID -->
+<section class="insta-section">
+  <div class="label" style="font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Follow Along</div>
+  <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,64px);line-height:1;letter-spacing:.05em;">@MELLERMA.WRLD</h2>
+  <div class="insta-grid">
+    <div class="insta-item"><img src="img-tee-model-front.jpg" alt=""><div class="insta-overlay"><span>@mellerma.wrld</span></div></div>
+    <div class="insta-item"><img src="img-tee-back-print.jpg" alt=""><div class="insta-overlay"><span>@mellerma.wrld</span></div></div>
+    <div class="insta-item"><img src="img-pants-front.png" alt=""><div class="insta-overlay"><span>@mellerma.wrld</span></div></div>
+    <div class="insta-item"><img src="img-tee-model-back.jpg" alt=""><div class="insta-overlay"><span>@mellerma.wrld</span></div></div>
+    <div class="insta-item"><img src="img-pants-back.jpg" alt=""><div class="insta-overlay"><span>@mellerma.wrld</span></div></div>
+    <div class="insta-item"><img src="img-tee-flat.jpg" alt=""><div class="insta-overlay"><span>@mellerma.wrld</span></div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="f-brand"><h3>MELLERMA</h3><p>A unified mindset. Not made to follow trends — made to create our own lane.</p></div>
+    <div class="f-col"><h4>Shop</h4><ul><li><a href="product-tee.html">Trust God Tee</a></li><li><a href="product-pants.html">Thorns &amp; Steel Sweats</a></li></ul></div>
+    <div class="f-col"><h4>Brand</h4><ul><li><a href="about.html">About</a></li><li><a href="index.html">Home</a></li></ul></div>
+    <div class="f-col"><h4>Contact</h4><ul><li><a href="https://www.instagram.com/mellerma.wrld" target="_blank">Instagram</a></li><li><a href="mailto:mellerma_wrld2026@gmail.com">Email Us</a></li></ul></div>
+  </div>
+  <div class="footer-bot">
+    <p>© 2025 Mellerma. All rights reserved.</p>
+    <div class="footer-soc"><a href="https://www.instagram.com/mellerma.wrld" target="_blank">Instagram</a><a href="#">TikTok</a></div>
+  </div>
+</footer>
+</body>
+</html>
