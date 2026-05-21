@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MELLERMA — A Unified Mindset</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Bebas+Neue&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #000000;
+    --white: #ffffff;
+    --off-white: #f0ece4;
+    --red: #8b0000;
+    --gold: #b8943f;
+    --gold-light: #d4af6a;
+    --gray: #1a1a1a;
+    --mid-gray: #333333;
+    --text-gray: #888888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    cursor: crosshair;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(184,148,63,0.2);
+  }
+
+  .nav-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 0.3em;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-gray);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold-light); }
+
+  .nav-cart {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--white);
+    cursor: pointer;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 8px 20px;
+    transition: all 0.3s;
+  }
+
+  .nav-cart:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 80px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(139,0,0,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 80% 20%, rgba(184,148,63,0.05) 0%, transparent 60%),
+      linear-gradient(180deg, #000 0%, #0d0d0d 100%);
+  }
+
+  .hero-cross-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 700px;
+    opacity: 0.03;
+    background-image:
+      repeating-linear-gradient(0deg, var(--white) 0px, var(--white) 2px, transparent 2px, transparent 80px),
+      repeating-linear-gradient(90deg, var(--white) 0px, var(--white) 2px, transparent 2px, transparent 80px);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    animation: fadeUp 1.2s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    animation: fadeUp 1.2s 0.2s ease both;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .hero-logo-img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    margin: 0 auto 32px;
+    display: block;
+    filter: brightness(1.1) contrast(1.1);
+    animation: fadeUp 1.2s 0.3s ease both;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 14vw, 180px);
+    line-height: 0.85;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    animation: fadeUp 1.2s 0.4s ease both;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--gold-light);
+    margin-top: 16px;
+    letter-spacing: 0.15em;
+    animation: fadeUp 1.2s 0.6s ease both;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .hero-manifesto {
+    max-width: 480px;
+    margin: 32px auto 48px;
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--text-gray);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    animation: fadeUp 1.2s 0.8s ease both;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    animation: fadeUp 1.2s 1s ease both;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .btn-primary {
+    background: var(--white);
+    color: var(--black);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 16px 40px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    color: var(--black);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 16px 40px;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.4);
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  .hero-scroll span {
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-gray);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    overflow: hidden;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: var(--gray);
+    padding: 14px 0;
+  }
+
+  .marquee-track {
+    display: flex;
+    animation: marquee 20s linear infinite;
+    white-space: nowrap;
+    width: max-content;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .marquee-item {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 0 40px;
+  }
+
+  .marquee-sep {
+    color: var(--red);
+    padding: 0 10px;
+  }
+
+  /* ── SECTION SHARED ── */
+  section {
+    padding: 120px 48px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 6vw, 96px);
+    line-height: 1;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+
+  /* ── SHOP ── */
+  #shop { max-width: 1400px; }
+
+  .shop-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+  }
+
+  .shop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 2px;
+  }
+
+  .product-card {
+    background: var(--gray);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    group: true;
+  }
+
+  .product-img-wrap {
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    background: #111;
+    position: relative;
+  }
+
+  .product-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    filter: grayscale(15%);
+  }
+
+  .product-card:hover .product-img-wrap img {
+    transform: scale(1.05);
+    filter: grayscale(0%);
+  }
+
+  .product-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: var(--red);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+  }
+
+  .product-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .product-card:hover .product-overlay {
+    opacity: 1;
+  }
+
+  .product-add-btn {
+    background: var(--white);
+    color: var(--black);
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .product-add-btn:hover { background: var(--gold-light); }
+
+  .product-info {
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .product-name {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+
+  .product-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    color: var(--text-gray);
+    letter-spacing: 0.1em;
+  }
+
+  .product-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--gold-light);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 120px;
+    align-items: center;
+  }
+
+  .about-text p {
+    font-size: 17px;
+    line-height: 2;
+    color: #aaa;
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+
+  .about-values {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .value-item {
+    border-left: 2px solid var(--gold);
+    padding-left: 16px;
+  }
+
+  .value-item h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    color: var(--white);
+  }
+
+  .value-item p {
+    font-size: 13px;
+    color: var(--text-gray);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .about-visual {
+    position: relative;
+  }
+
+  .about-visual-inner {
+    background: var(--gray);
+    padding: 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-visual-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(139,0,0,0.1) 0%, transparent 70%);
+  }
+
+  .about-visual-inner img {
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+  }
+
+  .about-tagline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 0.1em;
+    color: var(--white);
+    margin-top: 32px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .about-tagline-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--gold);
+    margin-top: 8px;
+    letter-spacing: 0.1em;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ── CHECKOUT / PURCHASE ── */
+  #purchase {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    max-width: 1400px;
+  }
+
+  .purchase-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-top: 64px;
+  }
+
+  .cart-summary {
+    background: var(--gray);
+    padding: 40px;
+  }
+
+  .cart-title {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .cart-empty {
+    text-align: center;
+    padding: 60px 0;
+    color: var(--text-gray);
+    font-size: 14px;
+    font-style: italic;
+  }
+
+  .cart-items { display: none; }
+  .cart-items.has-items { display: block; }
+
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .cart-item-name {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+  }
+
+  .cart-item-detail {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    color: var(--text-gray);
+    margin-top: 4px;
+  }
+
+  .cart-item-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--gold-light);
+  }
+
+  .cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    margin-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .cart-total-label {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+  }
+
+  .cart-total-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--gold-light);
+  }
+
+  /* CHECKOUT FORM */
+  .checkout-form-wrap {
+    background: var(--gray);
+    padding: 40px;
+  }
+
+  .form-title {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .form-section-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    margin-top: 28px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+  }
+
+  .form-group.full { grid-column: 1 / -1; }
+
+  .form-group label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-gray);
+    margin-bottom: 8px;
+  }
+
+  .form-group input,
+  .form-group select {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    padding: 12px 16px;
+    outline: none;
+    transition: border-color 0.3s;
+    appearance: none;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: var(--gold);
+  }
+
+  .form-group input::placeholder { color: #555; }
+
+  /* Payment methods */
+  .payment-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .pay-tab {
+    flex: 1;
+    padding: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text-gray);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+  }
+
+  .pay-tab.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(184,148,63,0.08);
+  }
+
+  .pay-tab:hover { border-color: var(--gold); color: var(--gold); }
+
+  .payment-panel { display: none; }
+  .payment-panel.active { display: block; }
+
+  .card-icons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .card-icon {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--text-gray);
+  }
+
+  .secure-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: rgba(0,100,0,0.12);
+    border: 1px solid rgba(0,150,0,0.2);
+    border-radius: 2px;
+  }
+
+  .secure-badge span {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    color: #4caf50;
+    letter-spacing: 0.1em;
+  }
+
+  .paypal-btn {
+    width: 100%;
+    background: #003087;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    padding: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .paypal-btn:hover { background: #002060; }
+
+  .paypal-note {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: var(--text-gray);
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  .submit-order {
+    width: 100%;
+    background: var(--white);
+    color: var(--black);
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 18px;
+    border: none;
+    cursor: pointer;
+    margin-top: 24px;
+    transition: all 0.3s;
+  }
+
+  .submit-order:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+  }
+
+  /* ── SUBSCRIBE ── */
+  #subscribe {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    text-align: center;
+    background: var(--gray);
+    padding: 100px 48px;
+    max-width: 100%;
+  }
+
+  .subscribe-inner {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .subscribe-perks {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin: 32px 0 48px;
+    flex-wrap: wrap;
+  }
+
+  .perk {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--text-gray);
+    text-transform: uppercase;
+  }
+
+  .perk-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  .subscribe-form {
+    display: flex;
+    gap: 0;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .subscribe-input {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-right: none;
+    color: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    padding: 16px 20px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .subscribe-input:focus { border-color: var(--gold); }
+  .subscribe-input::placeholder { color: #555; }
+
+  .subscribe-btn {
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 16px 28px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    white-space: nowrap;
+  }
+
+  .subscribe-btn:hover { background: var(--gold-light); }
+
+  .subscribe-note {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    color: #444;
+    margin-top: 16px;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #050505;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 64px 48px 32px;
+  }
+
+  .footer-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 64px;
+    margin-bottom: 64px;
+  }
+
+  .footer-brand h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 0.3em;
+    margin-bottom: 16px;
+  }
+
+  .footer-brand p {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.8;
+    max-width: 280px;
+  }
+
+  .footer-col h4 {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .footer-col ul { list-style: none; }
+
+  .footer-col ul li {
+    margin-bottom: 10px;
+  }
+
+  .footer-col ul li a {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #555;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.3s;
+  }
+
+  .footer-col ul li a:hover { color: var(--white); }
+
+  .footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .footer-bottom p {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    color: #333;
+    letter-spacing: 0.1em;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 20px;
+  }
+
+  .footer-social a {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #444;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-social a:hover { color: var(--gold); }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--gray);
+    max-width: 480px;
+    width: 100%;
+    padding: 48px;
+    position: relative;
+    animation: modalIn 0.3s ease;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.95) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--text-gray);
+    font-size: 22px;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover { color: var(--white); }
+
+  .modal-product-name {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  .modal-product-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: var(--gold-light);
+    margin-bottom: 24px;
+  }
+
+  .modal-size-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-gray);
+    margin-bottom: 12px;
+  }
+
+  .size-options {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .size-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .size-btn:hover, .size-btn.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(184,148,63,0.08);
+  }
+
+  .modal-add-btn {
+    width: 100%;
+    background: var(--white);
+    color: var(--black);
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .modal-add-btn:hover { background: var(--gold-light); }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    background: var(--gray);
+    border: 1px solid var(--gold);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    padding: 16px 24px;
+    z-index: 300;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    #about { grid-template-columns: 1fr; gap: 48px; }
+    .purchase-layout { grid-template-columns: 1fr; gap: 32px; }
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .subscribe-form { flex-direction: column; }
+    .subscribe-input { border-right: 1px solid rgba(255,255,255,0.15); border-bottom: none; }
+  }
+
+  @media (max-width: 600px) {
+    .shop-grid { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-cta { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">MELLERMA</a>
+  <ul class="nav-links">
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#purchase">Checkout</a></li>
+    <li><a href="#subscribe">Updates</a></li>
+  </ul>
+  <button class="nav-cart" onclick="scrollToCheckout()">Cart (<span id="cart-count">0</span>)</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding:0;max-width:100%;overflow:hidden;">
+  <div class="hero-bg"></div>
+  <div class="hero-cross-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">New Collection · Limited Drop</p>
+    <img class="hero-logo-img" src="/mnt/user-data/uploads/logo.png" alt="Mellerma Logo">
+    <h1 class="hero-title">MELLERMA</h1>
+    <p class="hero-subtitle">— A Unified Mindset —</p>
+    <p class="hero-manifesto">
+      Not made to follow trends.<br>
+      Made to create our own lane.<br>
+      Lowkey movement. High ambition.
+    </p>
+    <div class="hero-cta">
+      <a href="#shop" class="btn-primary">Shop Now</a>
+      <a href="#about" class="btn-outline">Our Story</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Lowkey Movement</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">High Ambition</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Trust God</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Thorns & Steel</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Unified Mindset</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Premium Streetwear</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Build From Nothing</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Move With Purpose</span><span class="marquee-sep">✦</span>
+    <!-- dupe for seamless loop -->
+    <span class="marquee-item">Lowkey Movement</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">High Ambition</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Trust God</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Thorns & Steel</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Unified Mindset</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Premium Streetwear</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Build From Nothing</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Move With Purpose</span><span class="marquee-sep">✦</span>
+  </div>
+</div>
+
+<!-- SHOP -->
+<section id="shop" style="padding-top:120px;padding-bottom:120px;max-width:1400px;margin:0 auto;">
+  <div class="shop-header">
+    <div>
+      <div class="section-label">Collection 01</div>
+      <h2 class="section-title">DEBUT DROP</h2>
+    </div>
+    <p style="font-family:'Inter',sans-serif;font-size:11px;color:var(--text-gray);letter-spacing:0.1em;text-transform:uppercase;">2 Pieces · Limited Quantities</p>
+  </div>
+  <div class="shop-grid">
+
+    <!-- T-Shirt -->
+    <div class="product-card" onclick="openModal('Trust God Tee','Essential Unisex Cotton T-Shirt','25.00','tee')">
+      <div class="product-img-wrap">
+        <img src="/mnt/user-data/uploads/10.PNG" alt="Trust God Tee">
+        <div class="product-badge">New Drop</div>
+        <div class="product-overlay">
+          <button class="product-add-btn">Select Size</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">Trust God Tee</div>
+          <div class="product-sub">Premium 260 GSM · 100% Cotton</div>
+        </div>
+        <div class="product-price">$25</div>
+      </div>
+    </div>
+
+    <!-- Sweatpants -->
+    <div class="product-card" onclick="openModal('Thorns & Steel Sweatpants','Unisex Straight-Leg Sweatpants','35.00','pants')">
+      <div class="product-img-wrap">
+        <img src="/mnt/user-data/uploads/8.png" alt="Thorns and Steel Sweatpants" style="object-fit:cover;">
+        <div class="product-badge">New Drop</div>
+        <div class="product-overlay">
+          <button class="product-add-btn">Select Size</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">Thorns &amp; Steel Sweats</div>
+          <div class="product-sub">320 GSM · 85% Cotton 15% Poly</div>
+        </div>
+        <div class="product-price">$35</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-text">
+    <div class="section-label">Who We Are</div>
+    <h2 class="section-title">THE MELLERMA<br>MOVEMENT</h2>
+    <p>Mellerma is for the people who come from different backgrounds but move as one. Who stay solid through pressure, build from nothing, and move with purpose.</p>
+    <p>We are not made to follow trends. We are made to create our own lane. Every piece we release is built with intention — premium materials, meaningful designs, and the belief that clothing can carry a message.</p>
+    <div class="about-values">
+      <div class="value-item">
+        <h4>Unity</h4>
+        <p>Different backgrounds, one mindset.</p>
+      </div>
+      <div class="value-item">
+        <h4>Purpose</h4>
+        <p>Every move is intentional.</p>
+      </div>
+      <div class="value-item">
+        <h4>Quality</h4>
+        <p>320 GSM heavyweight. Built to last.</p>
+      </div>
+      <div class="value-item">
+        <h4>Faith</h4>
+        <p>Trust God. Build from nothing.</p>
+      </div>
+    </div>
+  </div>
+  <div class="about-visual">
+    <div class="about-visual-inner">
+      <img src="/mnt/user-data/uploads/logo.png" alt="Mellerma">
+      <div class="about-tagline">JUST GETTING STARTED</div>
+      <div class="about-tagline-sub">mellerma.wrld</div>
+    </div>
+  </div>
+</section>
+
+<!-- PURCHASE / CHECKOUT -->
+<section id="purchase" style="padding-top:120px;padding-bottom:120px;max-width:1400px;margin:0 auto;">
+  <div class="section-label">Secure Purchase</div>
+  <h2 class="section-title">CHECKOUT</h2>
+
+  <div class="purchase-layout">
+
+    <!-- CART -->
+    <div class="cart-summary">
+      <div class="cart-title">Your Cart</div>
+      <div class="cart-empty" id="cart-empty">
+        Your cart is empty.<br>
+        <span style="font-size:12px;margin-top:8px;display:block;">Add items from the shop above.</span>
+      </div>
+      <div class="cart-items" id="cart-items-list"></div>
+      <div class="cart-total" id="cart-total" style="display:none;">
+        <div class="cart-total-label">Total</div>
+        <div class="cart-total-price" id="cart-total-amount">$0</div>
+      </div>
+
+      <div style="margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);">
+        <div style="font-family:'Inter',sans-serif;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-gray);margin-bottom:12px;">Shipping & Returns</div>
+        <ul style="font-family:'Inter',sans-serif;font-size:11px;color:#555;line-height:2;list-style:none;">
+          <li>✦ Free shipping on orders over $100</li>
+          <li>✦ Standard: 5–8 business days</li>
+          <li>✦ Express: 2–3 business days</li>
+          <li>✦ 14-day returns on unworn items</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="checkout-form-wrap">
+      <div class="form-title">Payment Details</div>
+
+      <div class="form-section-label">Contact</div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="your@email.com">
+      </div>
+
+      <div class="form-section-label">Shipping Address</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="First">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Last">
+        </div>
+        <div class="form-group full">
+          <label>Address</label>
+          <input type="text" placeholder="Street address">
+        </div>
+        <div class="form-group">
+          <label>City</label>
+          <input type="text" placeholder="City">
+        </div>
+        <div class="form-group">
+          <label>ZIP Code</label>
+          <input type="text" placeholder="00000">
+        </div>
+        <div class="form-group">
+          <label>State</label>
+          <input type="text" placeholder="CA">
+        </div>
+        <div class="form-group">
+          <label>Country</label>
+          <select>
+            <option>United States</option>
+            <option>Canada</option>
+            <option>United Kingdom</option>
+            <option>Australia</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-section-label">Payment Method</div>
+
+      <div class="payment-tabs">
+        <button class="pay-tab active" onclick="switchTab(this,'card')">💳 Card</button>
+        <button class="pay-tab" onclick="switchTab(this,'paypal')">PayPal</button>
+        <button class="pay-tab" onclick="switchTab(this,'apple')">Apple Pay</button>
+      </div>
+
+      <!-- Card Panel -->
+      <div class="payment-panel active" id="panel-card">
+        <div class="card-icons">
+          <span class="card-icon">VISA</span>
+          <span class="card-icon">MC</span>
+          <span class="card-icon">AMEX</span>
+          <span class="card-icon">DISC</span>
+        </div>
+        <div class="form-group">
+          <label>Card Number</label>
+          <input type="text" placeholder="1234  5678  9012  3456" maxlength="19" oninput="formatCard(this)">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Expiry Date</label>
+            <input type="text" placeholder="MM / YY" maxlength="7" oninput="formatExpiry(this)">
+          </div>
+          <div class="form-group">
+            <label>CVV</label>
+            <input type="text" placeholder="•••" maxlength="4">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Name on Card</label>
+          <input type="text" placeholder="Full name">
+        </div>
+        <div class="secure-badge">
+          <span>🔒</span>
+          <span>256-bit SSL Encryption · Secure Checkout · PCI Compliant</span>
+        </div>
+      </div>
+
+      <!-- PayPal Panel -->
+      <div class="payment-panel" id="panel-paypal">
+        <p style="font-family:'Cormorant Garamond',serif;font-size:15px;color:#aaa;margin-bottom:20px;line-height:1.8;">
+          You'll be redirected to PayPal to complete your purchase securely.
+        </p>
+        <button class="paypal-btn" onclick="showToast('Redirecting to PayPal...')">Pay with PayPal</button>
+        <p class="paypal-note">Buyer protection on all orders · No PayPal account required</p>
+      </div>
+
+      <!-- Apple Pay Panel -->
+      <div class="payment-panel" id="panel-apple">
+        <p style="font-family:'Cormorant Garamond',serif;font-size:15px;color:#aaa;margin-bottom:20px;line-height:1.8;">
+          Use Face ID or Touch ID to pay instantly with Apple Pay.
+        </p>
+        <button onclick="showToast('Apple Pay coming soon!')" style="width:100%;background:#000;border:1px solid #555;color:white;font-family:'Inter',sans-serif;font-size:14px;padding:16px;cursor:pointer;letter-spacing:0.05em;">
+           Pay with Apple Pay
+        </button>
+        <div class="secure-badge" style="margin-top:12px;">
+          <span>🔒</span>
+          <span>Your card details are never shared with Mellerma</span>
+        </div>
+      </div>
+
+      <button class="submit-order" onclick="placeOrder()">Place Order</button>
+    </div>
+  </div>
+</section>
+
+<!-- SUBSCRIBE -->
+<section id="subscribe" style="border-top:1px solid rgba(255,255,255,0.06);background:var(--gray);padding:100px 48px;max-width:100%;">
+  <div class="subscribe-inner">
+    <div class="section-label" style="justify-content:center;">Stay Connected</div>
+    <h2 class="section-title" style="font-size:clamp(36px,6vw,72px);">FIRST TO KNOW</h2>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:#888;line-height:1.8;margin-bottom:8px;">
+      Subscribe for early access, drop alerts, exclusive offers and brand updates.
+    </p>
+    <div class="subscribe-perks">
+      <div class="perk"><div class="perk-dot"></div> Early Access</div>
+      <div class="perk"><div class="perk-dot"></div> Drop Alerts</div>
+      <div class="perk"><div class="perk-dot"></div> Exclusive Offers</div>
+      <div class="perk"><div class="perk-dot"></div> Members Only</div>
+    </div>
+    <div class="subscribe-form">
+      <input class="subscribe-input" type="email" id="sub-email" placeholder="Enter your email address">
+      <button class="subscribe-btn" onclick="subscribe()">Subscribe</button>
+    </div>
+    <p class="subscribe-note">No spam. Unsubscribe any time. We respect your privacy.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>MELLERMA</h3>
+      <p>A unified mindset. Not made to follow trends — made to create our own lane. Lowkey movement. High ambition.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#shop">Trust God Tee</a></li>
+        <li><a href="#shop">Thorns &amp; Steel Sweats</a></li>
+        <li><a href="#shop">Upcoming Drops</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Info</h4>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#subscribe">Newsletter</a></li>
+        <li><a href="#">Size Guide</a></li>
+        <li><a href="#">Shipping & Returns</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="https://www.instagram.com/mellerma.wrld" target="_blank">Instagram</a></li>
+        <li><a href="mailto:contact@mellerma.com">Email Us</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Mellerma. All rights reserved.</p>
+    <div class="footer-social">
+      <a href="https://www.instagram.com/mellerma.wrld" target="_blank">Instagram</a>
+      <a href="#">TikTok</a>
+    </div>
+  </div>
+</footer>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-product-name" id="modal-name"></div>
+    <div style="font-family:'Inter',sans-serif;font-size:11px;color:var(--text-gray);letter-spacing:0.1em;margin-bottom:12px;" id="modal-sub"></div>
+    <div class="modal-product-price" id="modal-price"></div>
+    <div class="modal-size-label">Select Size</div>
+    <div class="size-options" id="modal-sizes"></div>
+    <button class="modal-add-btn" onclick="addToCart()">Add to Cart</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ── STATE ──
+  let cart = [];
+  let currentProduct = null;
+  let selectedSize = null;
+
+  // ── PRODUCT MODAL ──
+  function openModal(name, sub, price, type) {
+    currentProduct = { name, sub, price, type };
+    selectedSize = null;
+    document.getElementById('modal-name').textContent = name;
+    document.getElementById('modal-sub').textContent = sub;
+    document.getElementById('modal-price').textContent = '$' + price;
+    const sizes = type === 'tee'
+      ? ['XS','S','M','L','XL','XXL']
+      : ['XS','S','M','L','XL','XXL'];
+    const sizesEl = document.getElementById('modal-sizes');
+    sizesEl.innerHTML = '';
+    sizes.forEach(s => {
+      const btn = document.createElement('button');
+      btn.className = 'size-btn';
+      btn.textContent = s;
+      btn.onclick = () => {
+        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedSize = s;
+      };
+      sizesEl.appendChild(btn);
+    });
+    document.getElementById('modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+    currentProduct = null;
+    selectedSize = null;
+  }
+
+  // close on overlay click
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  function addToCart() {
+    if (!selectedSize) { showToast('Please select a size'); return; }
+    const item = { ...currentProduct, size: selectedSize, id: Date.now() };
+    cart.push(item);
+    updateCart();
+    closeModal();
+    showToast(item.name + ' (' + selectedSize + ') added to cart');
+  }
+
+  // ── CART ──
+  function updateCart() {
+    const count = cart.length;
+    document.getElementById('cart-count').textContent = count;
+
+    const emptyEl = document.getElementById('cart-empty');
+    const listEl = document.getElementById('cart-items-list');
+    const totalEl = document.getElementById('cart-total');
+    const totalAmountEl = document.getElementById('cart-total-amount');
+
+    if (count === 0) {
+      emptyEl.style.display = 'block';
+      listEl.innerHTML = '';
+      totalEl.style.display = 'none';
+    } else {
+      emptyEl.style.display = 'none';
+      totalEl.style.display = 'flex';
+      listEl.innerHTML = '';
+      let total = 0;
+      cart.forEach(item => {
+        total += parseFloat(item.price);
+        listEl.innerHTML += `
+          <div class="cart-item">
+            <div>
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-detail">Size: ${item.size}</div>
+            </div>
+            <div class="cart-item-price">$${item.price}</div>
+          </div>`;
+      });
+      totalAmountEl.textContent = '$' + total.toFixed(2);
+    }
+  }
+
+  function scrollToCheckout() {
+    document.getElementById('purchase').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ── PAYMENT TABS ──
+  function switchTab(btn, panel) {
+    document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.payment-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + panel).classList.add('active');
+  }
+
+  // ── CARD FORMATTING ──
+  function formatCard(input) {
+    let v = input.value.replace(/\D/g, '').substring(0, 16);
+    input.value = v.replace(/(.{4})/g, '$1  ').trim();
+  }
+
+  function formatExpiry(input) {
+    let v = input.value.replace(/\D/g, '').substring(0, 4);
+    if (v.length >= 2) v = v.substring(0,2) + ' / ' + v.substring(2);
+    input.value = v;
+  }
+
+  // ── ORDER ──
+  function placeOrder() {
+    if (cart.length === 0) {
+      showToast('Your cart is empty!');
+      document.getElementById('shop').scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    showToast('🙏 Order placed! Check your email for confirmation.');
+    cart = [];
+    updateCart();
+  }
+
+  // ── SUBSCRIBE ──
+  function subscribe() {
+    const email = document.getElementById('sub-email').value;
+    if (!email || !email.includes('@')) {
+      showToast('Please enter a valid email');
+      return;
+    }
+    showToast('✦ You\'re on the list. Welcome to the movement.');
+    document.getElementById('sub-email').value = '';
+  }
+
+  // ── TOAST ──
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+</script>
+</body>
+</html>
+
