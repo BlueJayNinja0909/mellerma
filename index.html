@@ -23,12 +23,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .nav-cta:hover{background:var(--gold);color:var(--blk);border-color:var(--gold);}
 
 /* HERO */
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding:80px 24px 60px;}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding:100px 24px 60px;}
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 45%,rgba(139,0,0,0.07) 0%,transparent 70%),linear-gradient(180deg,#000 0%,#0c0c0c 100%);}
 .hero-cross{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(700px,90vw);height:min(700px,90vw);opacity:.035;pointer-events:none;}
 .hero-eyebrow{position:relative;font-size:10px;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;animation:fu 1s .1s both;}
-.hero-logo{position:relative;width:130px;height:130px;border-radius:50%;margin:0 auto 28px;object-fit:cover;filter:brightness(1.05);animation:fu 1s .2s both;}
-.hero-title{position:relative;font-family:'Bebas Neue',sans-serif;font-size:clamp(72px,16vw,200px);line-height:.85;letter-spacing:.05em;animation:fu 1s .3s both;}
+
+/* Enhanced Logo Styling to match your white-on-black layout */
+.hero-logo-container{position:relative;margin:0 auto 20px;animation:fu 1s .2s both;display:flex;justify-content:center;align-items:center;}
+.hero-logo{width:220px;height:auto;filter:brightness(1.1);max-width:80vw;}
+
+.hero-title{position:relative;font-family:'Bebas Neue',sans-serif;font-size:clamp(72px,16vw,200px);line-height:.85;letter-spacing:.05em;animation:fu 1s .3s both;margin-top:-10px;}
 .hero-sub{position:relative;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(15px,2vw,20px);color:var(--goldl);margin-top:16px;letter-spacing:.12em;animation:fu 1s .45s both;}
 .hero-desc{position:relative;max-width:440px;margin:28px auto 0;font-size:14px;line-height:1.9;color:var(--tgrey);font-weight:300;animation:fu 1s .6s both;}
 .hero-btns{position:relative;display:flex;gap:14px;justify-content:center;margin-top:44px;flex-wrap:wrap;animation:fu 1s .75s both;}
@@ -54,19 +58,27 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .sec-label{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:14px;}
 .sec-label::after{content:'';flex:0 0 48px;height:1px;background:var(--gold);}
 .sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,80px);line-height:1;letter-spacing:.05em;margin-bottom:48px;}
-.preview-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;}
+.preview-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;} /* Tweaked gap slightly for clean presentation */
 .p-card{position:relative;background:var(--grey);overflow:hidden;text-decoration:none;color:inherit;display:block;}
 .p-card-img{aspect-ratio:3/4;overflow:hidden;background:#111;position:relative;}
 .p-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.25,.46,.45,.94),filter .4s;}
 .p-card:hover .p-card-img img{transform:scale(1.06);filter:brightness(1.08);}
-.p-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(6,6,6,.9) 0%,transparent 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:28px;}
-.p-card-badge{position:absolute;top:18px;left:18px;background:var(--red);color:#fff;font-size:8px;letter-spacing:.2em;text-transform:uppercase;padding:5px 10px;}
+.p-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(6,6,6,.95) 0%,transparent 65%);display:flex;flex-direction:column;justify-content:flex-end;padding:28px;}
+.p-card-badge{position:absolute;top:18px;left:18px;background:var(--red);color:#fff;font-size:8px;letter-spacing:.2em;text-transform:uppercase;padding:5px 10px;z-index:10;}
 .p-card-name{font-family:'Cinzel',serif;font-size:18px;font-weight:700;letter-spacing:.08em;margin-bottom:4px;}
 .p-card-sub{font-size:10px;color:var(--cream);letter-spacing:.1em;margin-bottom:16px;}
 .p-card-cta{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--goldl);border-bottom:1px solid var(--goldl);padding-bottom:2px;display:inline-block;}
 
+/* BRAND LIFESTYLE BANNER (Featuring Beach Model) */
+.beach-banner{position:relative;width:100%;height:60vh;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center;}
+.beach-banner img{width:100%;height:100%;object-fit:cover;opacity:0.4;transition:transform 1.2s ease;}
+.beach-banner:hover img{transform:scale(1.03);}
+.beach-content{position:absolute;z-index:2;text-align:center;padding:0 24px;}
+.beach-eyebrow{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.beach-heading{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,6vw,90px);letter-spacing:0.05em;line-height:1;}
+
 /* MANIFESTO STRIP */
-.manifesto{padding:90px 48px;background:var(--grey);text-align:center;position:relative;overflow:hidden;}
+.manifesto{padding:110px 48px;background:var(--grey);text-align:center;position:relative;overflow:hidden;}
 .manifesto::before{content:'MELLERMA';position:absolute;font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,18vw,260px);color:rgba(255,255,255,.018);top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;letter-spacing:.05em;}
 .mf-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3.5vw,44px);font-weight:300;line-height:1.3;max-width:780px;margin:0 auto 20px;position:relative;}
 .mf-quote em{font-style:italic;color:var(--goldl);}
@@ -114,7 +126,8 @@ footer{background:#030303;border-top:1px solid rgba(255,255,255,.06);padding:52p
   nav{padding:15px 20px;}
   .nav-links{display:none;}
   .preview{padding:70px 20px;}
-  .preview-grid{grid-template-columns:1fr;}
+  .preview-grid{grid-template-columns:1fr;gap:32px;}
+  .beach-banner{height:45vh;}
   .manifesto{padding:70px 20px;}
   .sub-wrap{padding:70px 20px;}
   .sub-form{flex-direction:column;}
@@ -137,7 +150,6 @@ footer{background:#030303;border-top:1px solid rgba(255,255,255,.06);padding:52p
   <a href="shop.html" class="nav-cta">Shop Now</a>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
   <svg class="hero-cross" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -155,7 +167,11 @@ footer{background:#030303;border-top:1px solid rgba(255,255,255,.06);padding:52p
   </svg>
 
   <p class="hero-eyebrow">Sacred Streetwear · Est. 2025</p>
-  <img class="hero-logo" src="img-logo-large.jpg" alt="Mellerma Logo">
+  
+  <div class="hero-logo-container">
+    <img class="hero-logo" src="logo.png" alt="Mellerma Logo">
+  </div>
+
   <h1 class="hero-title">MELLERMA</h1>
   <p class="hero-sub">— A Unified Mindset —</p>
   <p class="hero-desc">Not made to follow trends.<br>Made to create our own lane.<br>Lowkey movement. High ambition.</p>
@@ -169,7 +185,6 @@ footer{background:#030303;border-top:1px solid rgba(255,255,255,.06);padding:52p
   </div>
 </section>
 
-<!-- MARQUEE -->
 <div class="mq">
   <div class="mq-track">
     <span class="mq-item">Lowkey Movement</span><span class="mq-sep">✦</span>
@@ -193,7 +208,6 @@ footer{background:#030303;border-top:1px solid rgba(255,255,255,.06);padding:52p
   </div>
 </div>
 
-<!-- PRODUCT PREVIEW -->
 <section class="preview">
   <div class="reveal">
     <div class="sec-label">Drop 001</div>
@@ -202,7 +216,7 @@ footer{background:#030303;border-top:1px solid rgba(255,255,255,.06);padding:52p
   <div class="preview-grid reveal">
     <a href="product-tee.html" class="p-card">
       <div class="p-card-img">
-        <img src="img-tee-model-front.jpg" alt="Trust God Tee">
+        <img src="tshirt_front.jpg" alt="Trust God Tee">
         <div class="p-card-badge">New Drop</div>
         <div class="p-card-overlay">
           <div class="p-card-name">Trust God Tee</div>
@@ -213,7 +227,7 @@ footer{background:#030303;border-top:1px solid rgba(255,255,255,.06);padding:52p
     </a>
     <a href="product-pants.html" class="p-card">
       <div class="p-card-img">
-        <img src="img-pants-front.png" alt="Thorns &amp; Steel Sweatpants">
+        <img src="pants_front.jpg" alt="Thorns &amp; Steel Sweatpants">
         <div class="p-card-badge">Rhinestone Series</div>
         <div class="p-card-overlay">
           <div class="p-card-name">Thorns &amp; Steel Sweats</div>
@@ -225,7 +239,14 @@ footer{background:#030303;border-top:1px solid rgba(255,255,255,.06);padding:52p
   </div>
 </section>
 
-<!-- MANIFESTO -->
+<section class="beach-banner reveal">
+  <img src="beach_model.png" alt="Mellerma Lifestyle Lookbook">
+  <div class="beach-content">
+    <p class="beach-eyebrow">Lookbook 001</p>
+    <h2 class="beach-heading">BUILD FROM NOTHING</h2>
+  </div>
+</section>
+
 <section class="manifesto">
   <div class="sec-label reveal" style="justify-content:center;">Philosophy</div>
   <blockquote class="mf-quote reveal">
@@ -242,7 +263,6 @@ footer{background:#030303;border-top:1px solid rgba(255,255,255,.06);padding:52p
   </div>
 </section>
 
-<!-- SUBSCRIBE -->
 <div class="sub-wrap">
   <div class="sec-label reveal" style="justify-content:center;">Drop Alerts</div>
   <h2 class="sub-title reveal">BE FIRST IN LINE</h2>
@@ -253,7 +273,6 @@ footer{background:#030303;border-top:1px solid rgba(255,255,255,.06);padding:52p
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-grid">
     <div class="f-brand">
