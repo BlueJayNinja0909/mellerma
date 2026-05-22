@@ -120,6 +120,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
   .stripe-row{grid-template-columns:1fr;}
   .pay-methods{grid-template-columns:1fr 1fr 1fr;}
 }
+
+/* FOOTER */
+.co-footer{background:#030303;border-top:1px solid rgba(255,255,255,.06);padding:24px 48px;margin-top:0;}
+.co-footer-inner{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;}
+.co-footer-inner p{font-size:9px;color:#888;letter-spacing:.1em;}
+.co-footer-legal{display:flex;gap:20px;}
+.co-footer-legal a{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#bbb;text-decoration:none;transition:color .2s;}
+.co-footer-legal a:hover{color:#d4af6a;}
 </style>
 </head>
 <body>
@@ -601,5 +609,21 @@ function updateShipping(country) {
   document.getElementById('shipping-display').textContent = rates[country] || '$18.00';
 }
 </script>
+
+<div class="co-footer">
+  <div class="co-footer-inner">
+    <p>© 2026 Mellerma. All rights reserved.</p>
+    <div class="co-footer-legal">
+      <a href="legal.html">Privacy</a>
+      <a href="legal.html">Terms</a>
+      <a href="legal.html">Returns</a>
+      <a href="legal.html">Copyright</a>
+    </div>
+    <div class="co-footer-legal">
+      <a href="https://www.instagram.com/mellerma.wrld" target="_blank">Instagram</a>
+      <a href="#">TikTok</a>
+    </div>
+  </div>
+</div>
 </body>
 </html>
