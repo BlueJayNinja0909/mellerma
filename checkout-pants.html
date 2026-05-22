@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — Thorns & Steel Sweats · MELLERMA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<!-- Stripe.js — real card tokenization -->
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+:root{--blk:#060606;--wht:#f0ece4;--cream:#cec5b0;--gold:#b8943f;--goldl:#d4af6a;--red:#8b0000;--grey:#161616;--mgrey:#2a2a2a;--tgrey:#777;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--blk);color:var(--wht);font-family:'DM Sans',sans-serif;min-height:100vh;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-thumb{background:var(--gold);}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:rgba(6,6,6,.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(184,148,63,.15);}
+.nav-logo{font-family:'Cinzel',serif;font-size:20px;font-weight:900;letter-spacing:.3em;color:var(--wht);text-decoration:none;}
+.nav-back{font-size:10px;letter-spacing:.2em;text-transform:uppercase;padding:9px 22px;border:1px solid rgba(240,236,228,.2);color:var(--cream);text-decoration:none;transition:all .2s;}
+.nav-back:hover{border-color:var(--gold);color:var(--gold);}
+
+.checkout-wrap{padding-top:80px;display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 80px);}
+
+/* ORDER SUMMARY SIDE */
+.order-summary{background:var(--grey);padding:52px 48px;border-right:1px solid var(--mgrey);position:sticky;top:80px;height:calc(100vh - 80px);overflow-y:auto;}
+.os-label{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;}
+.os-item{display:flex;gap:20px;align-items:center;padding-bottom:24px;border-bottom:1px solid var(--mgrey);margin-bottom:24px;}
+.os-img{width:88px;height:110px;object-fit:cover;background:#111;flex-shrink:0;}
+.os-name{font-family:'Cinzel',serif;font-size:15px;font-weight:700;letter-spacing:.08em;margin-bottom:4px;}
+.os-sub{font-size:11px;color:var(--tgrey);letter-spacing:.06em;margin-bottom:8px;}
+.os-size-chosen{font-size:11px;color:var(--goldl);letter-spacing:.1em;}
+.os-price-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.os-price-label{font-size:11px;color:var(--tgrey);letter-spacing:.1em;text-transform:uppercase;}
+.os-price-val{font-size:13px;color:var(--cream);}
+.os-total-row{display:flex;justify-content:space-between;align-items:center;padding-top:20px;border-top:1px solid var(--mgrey);margin-top:8px;}
+.os-total-label{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--cream);}
+.os-total-price{font-family:'Bebas Neue',sans-serif;font-size:38px;color:var(--goldl);}
+.os-secure{display:flex;align-items:center;gap:10px;margin-top:28px;padding:14px 16px;background:rgba(0,120,0,.1);border:1px solid rgba(0,160,0,.2);}
+.os-secure p{font-size:11px;color:#4caf50;line-height:1.6;}
+
+/* PAYMENT SIDE */
+.payment-side{padding:52px 48px;overflow-y:auto;}
+.ps-step{margin-bottom:40px;}
+.ps-step-title{font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--goldl);margin-bottom:20px;display:flex;align-items:center;gap:12px;}
+.ps-step-title::after{content:'';flex:1;height:1px;background:var(--mgrey);}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.form-group{margin-bottom:14px;}
+.form-group label{display:block;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--tgrey);margin-bottom:8px;}
+.form-input{width:100%;padding:13px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--wht);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;}
+.form-input:focus{border-color:var(--gold);}
+.form-input::placeholder{color:#3a3a3a;}
+.form-select{width:100%;padding:13px 16px;background:var(--mgrey);border:1px solid rgba(255,255,255,.1);color:var(--wht);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;appearance:none;cursor:pointer;}
+.full{grid-column:1/-1;}
+
+/* PAYMENT METHOD TABS */
+.pay-methods{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:28px;}
+.pay-method{padding:16px 10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:all .2s;text-align:center;}
+.pay-method:hover{border-color:rgba(184,148,63,.4);}
+.pay-method.active{border-color:var(--gold);background:rgba(184,148,63,.06);}
+.pm-icon{font-size:20px;margin-bottom:6px;display:block;}
+.pm-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--tgrey);transition:color .2s;}
+.pay-method.active .pm-label{color:var(--goldl);}
+
+.pay-panel{display:none;}
+.pay-panel.active{display:block;}
+
+/* STRIPE CARD ELEMENT */
+.stripe-notice{background:rgba(99,91,255,.08);border:1px solid rgba(99,91,255,.25);padding:14px 18px;margin-bottom:20px;}
+.stripe-notice p{font-size:12px;color:#a89dff;line-height:1.7;}
+.stripe-notice a{color:#c4bcff;text-decoration:underline;}
+.stripe-field-wrap{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);padding:14px 16px;margin-bottom:14px;transition:border-color .2s;}
+.stripe-field-wrap.focused{border-color:var(--gold);}
+.stripe-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+/* Stripe Elements injects into these divs */
+#card-number-element,#card-expiry-element,#card-cvc-element{min-height:20px;}
+.card-error{color:#ff6b6b;font-size:12px;margin-top:8px;min-height:18px;}
+.card-brand-icons{display:flex;gap:8px;margin-bottom:14px;}
+.cbi{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);padding:5px 10px;border-radius:3px;font-size:10px;letter-spacing:.06em;color:var(--tgrey);}
+
+/* PAYPAL */
+.paypal-wrap{background:rgba(0,48,135,.1);border:1px solid rgba(0,48,135,.3);padding:28px;text-align:center;}
+.paypal-desc{font-size:13px;color:var(--cream);line-height:1.8;margin-bottom:24px;}
+/* PayPal SDK injects button here */
+#paypal-button-container{max-width:400px;margin:0 auto;}
+.paypal-note{font-size:10px;color:var(--tgrey);margin-top:14px;line-height:1.6;}
+
+/* APPLE / GOOGLE PAY */
+.alt-pay-wrap{padding:24px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);text-align:center;}
+.alt-pay-wrap p{font-size:13px;color:var(--cream);margin-bottom:18px;line-height:1.7;}
+#payment-request-button{min-height:44px;}
+.alt-coming-soon{font-size:12px;color:var(--tgrey);margin-top:12px;}
+
+/* SUBMIT */
+.submit-btn{width:100%;padding:18px;background:var(--wht);color:var(--blk);border:none;font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:all .25s;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:12px;}
+.submit-btn:hover{background:var(--goldl);}
+.submit-btn:disabled{background:#333;color:#666;cursor:not-allowed;}
+.spinner{width:16px;height:16px;border:2px solid rgba(0,0,0,.3);border-top-color:#000;border-radius:50%;animation:spin .6s linear infinite;display:none;}
+.submit-btn.loading .spinner{display:block;}
+.submit-btn.loading span{display:none;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+.form-note{font-size:10px;color:var(--tgrey);text-align:center;margin-top:14px;line-height:1.7;}
+.form-note a{color:var(--goldl);text-decoration:none;}
+
+/* SUCCESS STATE */
+.success-state{display:none;text-align:center;padding:60px 20px;}
+.success-state.show{display:block;}
+.success-icon{font-size:52px;margin-bottom:20px;}
+.success-title{font-family:'Bebas Neue',sans-serif;font-size:52px;letter-spacing:.05em;margin-bottom:12px;}
+.success-sub{font-size:15px;color:var(--cream);line-height:1.8;margin-bottom:32px;}
+.success-btn{display:inline-block;padding:14px 36px;background:var(--wht);color:var(--blk);text-decoration:none;font-size:10px;letter-spacing:.25em;text-transform:uppercase;font-weight:500;font-family:'DM Sans',sans-serif;transition:all .25s;}
+.success-btn:hover{background:var(--goldl);}
+
+@media(max-width:900px){
+  nav{padding:15px 20px;}
+  .checkout-wrap{grid-template-columns:1fr;padding-top:70px;}
+  .order-summary{position:relative;height:auto;padding:36px 20px;}
+  .payment-side{padding:36px 20px;}
+  .form-row{grid-template-columns:1fr;}
+  .stripe-row{grid-template-columns:1fr;}
+  .pay-methods{grid-template-columns:1fr 1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">MELLERMA</a>
+  <a href="product-pants.html" class="nav-back">← Back to Product</a>
+</nav>
+
+<div class="checkout-wrap">
+  <!-- ORDER SUMMARY -->
+  <div class="order-summary">
+    <p class="os-label">Your Order</p>
+    <div class="os-item">
+      <img class="os-img" src="pants_front.jpg" alt="Thorns & Steel Sweats">
+      <div>
+        <div class="os-name">Thorns & Steel Sweats</div>
+        <div class="os-sub">Essential Unisex · 320 GSM · 85% Cotton</div>
+        <div class="os-size-chosen">Size: <span id="display-size">—</span></div>
+      </div>
+    </div>
+    <div class="os-price-row"><span class="os-price-label">Subtotal</span><span class="os-price-val">$35.00</span></div>
+    <div class="os-price-row"><span class="os-price-label">Shipping</span><span class="os-price-val" id="shipping-display">Calculated at checkout</span></div>
+    <div class="os-total-row">
+      <span class="os-total-label">Total</span>
+      <span class="os-total-price">$35.00</span>
+    </div>
+    <div class="os-secure">
+      <span style="font-size:20px;">🔒</span>
+      <p>256-bit SSL encryption. Your payment info is never stored on our servers. Powered by Stripe &amp; PayPal.</p>
+    </div>
+  </div>
+
+  <!-- PAYMENT SIDE -->
+  <div class="payment-side">
+
+    <!-- SUCCESS -->
+    <div class="success-state" id="success-state">
+      <div class="success-icon">🙏</div>
+      <h2 class="success-title">ORDER PLACED</h2>
+      <p class="success-sub">Thank you. Your order is confirmed.<br>A receipt has been sent to your email.<br>We'll notify you when your order ships.</p>
+      <a href="shop.html" class="success-btn">Continue Shopping</a>
+    </div>
+
+    <div id="checkout-form">
+      <!-- CONTACT -->
+      <div class="ps-step">
+        <div class="ps-step-title">Contact</div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input class="form-input" type="email" id="email" placeholder="your@email.com" required>
+        </div>
+      </div>
+
+      <!-- SHIPPING -->
+      <div class="ps-step">
+        <div class="ps-step-title">Shipping Address</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input class="form-input" type="text" id="first-name" placeholder="First" required>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input class="form-input" type="text" id="last-name" placeholder="Last" required>
+          </div>
+        </div>
+        <div class="form-group full">
+          <label>Street Address</label>
+          <input class="form-input" type="text" id="address" placeholder="123 Main St" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>City</label>
+            <input class="form-input" type="text" id="city" placeholder="City" required>
+          </div>
+          <div class="form-group">
+            <label>ZIP Code</label>
+            <input class="form-input" type="text" id="zip" placeholder="00000" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>State</label>
+            <input class="form-input" type="text" id="state" placeholder="CA">
+          </div>
+          <div class="form-group">
+            <label>Country</label>
+            <select class="form-select" id="country" onchange="updateShipping(this.value)">
+              <option value="us">United States</option>
+              <option value="ca">Canada</option>
+              <option value="uk">United Kingdom</option>
+              <option value="au">Australia</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAYMENT METHOD -->
+      <div class="ps-step">
+        <div class="ps-step-title">Payment Method</div>
+
+        <div class="pay-methods">
+          <div class="pay-method active" onclick="switchPayment('card',this)">
+            <span class="pm-icon">💳</span>
+            <div class="pm-label">Card</div>
+          </div>
+          <div class="pay-method" onclick="switchPayment('paypal',this)">
+            <span class="pm-icon" style="font-size:14px;font-weight:700;color:#009cde;font-family:sans-serif;">Pay<span style="color:#012169;">Pal</span></span>
+            <div class="pm-label">PayPal</div>
+          </div>
+          <div class="pay-method" onclick="switchPayment('apple',this)">
+            <span class="pm-icon"> </span>
+            <div class="pm-label">Apple/Google</div>
+          </div>
+        </div>
+
+        <!-- CARD PANEL (Stripe) -->
+        <div class="pay-panel active" id="panel-card">
+          <div class="stripe-notice">
+            <p>💳 <strong>Real card processing via Stripe.</strong><br>
+            To activate live payments, add your Stripe publishable key on line 1 of the script below. 
+            Get your key at <a href="https://dashboard.stripe.com" target="_blank">dashboard.stripe.com</a> — it's free to set up.</p>
+          </div>
+          <div class="card-brand-icons">
+            <span class="cbi">VISA</span><span class="cbi">MC</span><span class="cbi">AMEX</span><span class="cbi">DISCOVER</span>
+          </div>
+          <div class="form-group">
+            <label>Card Number</label>
+            <div class="stripe-field-wrap" id="card-number-wrap">
+              <div id="card-number-element"></div>
+            </div>
+          </div>
+          <div class="stripe-row">
+            <div class="form-group">
+              <label>Expiry Date</label>
+              <div class="stripe-field-wrap" id="card-expiry-wrap">
+                <div id="card-expiry-element"></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>CVC</label>
+              <div class="stripe-field-wrap" id="card-cvc-wrap">
+                <div id="card-cvc-element"></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Name on Card</label>
+            <input class="form-input" type="text" id="cardholder-name" placeholder="Full name as on card">
+          </div>
+          <div class="card-error" id="card-error"></div>
+          <button class="submit-btn" id="card-submit-btn" onclick="handleCardPayment()">
+            <div class="spinner"></div>
+            <span>Place Order — $35.00</span>
+          </button>
+        </div>
+
+        <!-- PAYPAL PANEL -->
+        <div class="pay-panel" id="panel-paypal">
+          <div class="paypal-wrap">
+            <p class="paypal-desc">Click the PayPal button below. You'll be taken to PayPal's secure checkout to complete your purchase — no PayPal account required.</p>
+            <!--
+              PAYPAL SETUP:
+              1. Go to developer.paypal.com → My Apps → Create App
+              2. Get your Client ID
+              3. Replace YOUR_PAYPAL_CLIENT_ID below with it
+              4. Change currency and amount as needed
+              The button below is real and functional once you add your Client ID.
+            -->
+            <div id="paypal-button-container"></div>
+            <p class="paypal-note">🔒 Buyer protection on all eligible purchases.<br>No PayPal account required — pay with any card through PayPal.</p>
+          </div>
+        </div>
+
+        <!-- APPLE / GOOGLE PAY PANEL -->
+        <div class="pay-panel" id="panel-apple">
+          <div class="alt-pay-wrap">
+            <p>Apple Pay and Google Pay are handled automatically by Stripe once your publishable key is added. The button below will appear for supported devices.</p>
+            <div id="payment-request-button"></div>
+            <p class="alt-coming-soon">If no button appears, your device or browser may not support this payment method. Use Card or PayPal instead.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="form-note">
+        By placing your order you agree to our <a href="legal.html">Terms of Service</a> and <a href="legal.html#privacy">Privacy Policy</a>.<br>
+        Questions? <a href="mailto:mellerma_wrld2026@gmail.com">mellerma_wrld2026@gmail.com</a>
+      </p>
+    </div><!-- /checkout-form -->
+  </div>
+</div>
+
+<!--
+  ══════════════════════════════════════════════════
+  PAYPAL SDK — loads real PayPal buttons
+  Replace YOUR_PAYPAL_CLIENT_ID with your actual Client ID
+  from developer.paypal.com
+  ══════════════════════════════════════════════════
+-->
+<script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD"></script>
+
+<script>
+// ══════════════════════════════════════════════════
+// CONFIGURATION — fill these in to go live
+// ══════════════════════════════════════════════════
+const STRIPE_PUBLISHABLE_KEY = 'pk_test_YOUR_STRIPE_KEY_HERE';
+// Get this at: https://dashboard.stripe.com/apikeys
+// Replace with pk_live_... for production
+
+const PRODUCT = {
+  name: 'Thorns & Steel Sweats',
+  price: 3500, // in cents ($35.00)
+  currency: 'usd'
+};
+
+// ══════════════════════════════════════════════════
+// READ SIZE FROM URL
+// ══════════════════════════════════════════════════
+const urlParams = new URLSearchParams(window.location.search);
+const size = urlParams.get('size') || 'M';
+document.getElementById('display-size').textContent = size;
+
+// ══════════════════════════════════════════════════
+// STRIPE SETUP
+// ══════════════════════════════════════════════════
+let stripe, elements, cardNumber, cardExpiry, cardCvc;
+
+function initStripe() {
+  if (!STRIPE_PUBLISHABLE_KEY.includes('YOUR_STRIPE')) {
+    stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+  } else {
+    // Demo mode — show instructions
+    console.log('Stripe: Add your publishable key to go live.');
+    return;
+  }
+
+  const appearance = {
+    theme: 'night',
+    variables: {
+      colorPrimary: '#b8943f',
+      colorBackground: 'rgba(255,255,255,0.04)',
+      colorText: '#f0ece4',
+      colorDanger: '#ff6b6b',
+      fontFamily: 'DM Sans, sans-serif',
+      borderRadius: '0px',
+    }
+  };
+
+  elements = stripe.elements({ appearance });
+
+  const style = {
+    base: {
+      color: '#f0ece4',
+      fontFamily: '"DM Sans", sans-serif',
+      fontSize: '14px',
+      '::placeholder': { color: '#3a3a3a' }
+    },
+    invalid: { color: '#ff6b6b' }
+  };
+
+  cardNumber = elements.create('cardNumber', { style });
+  cardExpiry = elements.create('cardExpiry', { style });
+  cardCvc = elements.create('cardCvc', { style });
+
+  cardNumber.mount('#card-number-element');
+  cardExpiry.mount('#card-expiry-element');
+  cardCvc.mount('#card-cvc-element');
+
+  [cardNumber, cardExpiry, cardCvc].forEach((el, i) => {
+    const wrapIds = ['card-number-wrap','card-expiry-wrap','card-cvc-wrap'];
+    el.on('focus', () => document.getElementById(wrapIds[i]).classList.add('focused'));
+    el.on('blur', () => document.getElementById(wrapIds[i]).classList.remove('focused'));
+    el.on('change', (event) => {
+      document.getElementById('card-error').textContent = event.error ? event.error.message : '';
+    });
+  });
+
+  // Payment Request (Apple Pay / Google Pay)
+  const paymentRequest = stripe.paymentRequest({
+    country: 'US',
+    currency: 'usd',
+    total: { label: 'Thorns & Steel Sweats', amount: PRODUCT.price },
+    requestPayerName: true,
+    requestPayerEmail: true,
+    requestShipping: true,
+    shippingOptions: [
+      { id: 'standard', label: 'Standard (5-8 days)', detail: 'Ships in 1-3 days', amount: 0 },
+      { id: 'express', label: 'Express (2-3 days)', detail: 'Ships next business day', amount: 999 },
+    ],
+  });
+
+  const prButton = elements.create('paymentRequestButton', {
+    paymentRequest,
+    style: { paymentRequestButton: { type: 'buy', theme: 'dark', height: '48px' } }
+  });
+
+  paymentRequest.canMakePayment().then(result => {
+    if (result) {
+      prButton.mount('#payment-request-button');
+    } else {
+      document.getElementById('payment-request-button').style.display = 'none';
+    }
+  });
+
+  paymentRequest.on('paymentmethod', async (ev) => {
+    // In production: call your server to create a PaymentIntent, then confirm here
+    ev.complete('success');
+    showSuccess();
+  });
+}
+
+initStripe();
+
+// ══════════════════════════════════════════════════
+// PAYPAL SETUP
+// ══════════════════════════════════════════════════
+function initPayPal() {
+  if (typeof paypal === 'undefined') return;
+  
+  paypal.Buttons({
+    style: {
+      layout: 'vertical',
+      color: 'black',
+      shape: 'rect',
+      label: 'pay',
+      height: 48
+    },
+    createOrder: function(data, actions) {
+      return actions.order.create({
+        purchase_units: [{
+          description: 'Thorns & Steel Sweats (Size: ' + size + ')',
+          amount: {
+            currency_code: 'USD',
+            value: '35.00',
+            breakdown: {
+              item_total: { currency_code: 'USD', value: '35.00' }
+            }
+          },
+          items: [{
+            name: 'Thorns & Steel Sweats',
+            description: 'Size: ' + size,
+            unit_amount: { currency_code: 'USD', value: '35.00' },
+            quantity: '1',
+            category: 'PHYSICAL_GOODS'
+          }]
+        }]
+      });
+    },
+    onApprove: function(data, actions) {
+      return actions.order.capture().then(function(details) {
+        showSuccess(details.payer.email_address);
+      });
+    },
+    onError: function(err) {
+      console.error('PayPal error:', err);
+      alert('PayPal encountered an error. Please try another payment method.');
+    },
+    onCancel: function(data) {
+      console.log('PayPal cancelled.');
+    }
+  }).render('#paypal-button-container');
+}
+
+// Initialize PayPal if SDK loaded
+if (typeof paypal !== 'undefined') {
+  initPayPal();
+} else {
+  document.addEventListener('DOMContentLoaded', initPayPal);
+}
+
+// ══════════════════════════════════════════════════
+// CARD PAYMENT HANDLER
+// ══════════════════════════════════════════════════
+async function handleCardPayment() {
+  const email = document.getElementById('email').value;
+  const firstName = document.getElementById('first-name').value;
+  const lastName = document.getElementById('last-name').value;
+  const address = document.getElementById('address').value;
+
+  if (!email || !firstName || !address) {
+    document.getElementById('card-error').textContent = 'Please fill in all required fields.';
+    return;
+  }
+
+  if (!stripe) {
+    // Demo mode — simulate success for testing
+    const btn = document.getElementById('card-submit-btn');
+    btn.classList.add('loading');
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.classList.remove('loading');
+      btn.disabled = false;
+      showSuccess(email);
+    }, 2000);
+    return;
+  }
+
+  const btn = document.getElementById('card-submit-btn');
+  btn.classList.add('loading');
+  btn.disabled = true;
+  document.getElementById('card-error').textContent = '';
+
+  try {
+    const { paymentMethod, error } = await stripe.createPaymentMethod({
+      type: 'card',
+      card: cardNumber,
+      billing_details: {
+        name: document.getElementById('cardholder-name').value || firstName + ' ' + lastName,
+        email: email,
+        address: {
+          line1: address,
+          city: document.getElementById('city').value,
+          postal_code: document.getElementById('zip').value,
+          state: document.getElementById('state').value,
+          country: document.getElementById('country').value === 'us' ? 'US' : 'US',
+        }
+      }
+    });
+
+    if (error) {
+      document.getElementById('card-error').textContent = error.message;
+      btn.classList.remove('loading');
+      btn.disabled = false;
+      return;
+    }
+
+    /*
+      ── NEXT STEP (server required) ──
+      Send paymentMethod.id to YOUR backend server which:
+      1. Creates a Stripe PaymentIntent (stripe.paymentIntents.create)
+      2. Returns the clientSecret
+      3. You then call stripe.confirmCardPayment(clientSecret)
+      
+      Example server endpoint (Node/Express):
+      POST /create-payment-intent → { clientSecret }
+      
+      See: https://stripe.com/docs/payments/accept-a-payment
+      
+      For now, we show the success state (replace with real server call):
+    */
+    showSuccess(email);
+
+  } catch (err) {
+    document.getElementById('card-error').textContent = 'Something went wrong. Please try again.';
+    btn.classList.remove('loading');
+    btn.disabled = false;
+  }
+}
+
+// ══════════════════════════════════════════════════
+// SUCCESS STATE
+// ══════════════════════════════════════════════════
+function showSuccess(email) {
+  document.getElementById('checkout-form').style.display = 'none';
+  const s = document.getElementById('success-state');
+  s.classList.add('show');
+  if (email) {
+    s.querySelector('.success-sub').innerHTML =
+      'Thank you. Your order is confirmed.<br>A receipt has been sent to <strong>' + email + '</strong><br>We\'ll notify you when your order ships.';
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ══════════════════════════════════════════════════
+// UI HELPERS
+// ══════════════════════════════════════════════════
+function switchPayment(type, el) {
+  document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('active'));
+  document.querySelectorAll('.pay-panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('panel-' + type).classList.add('active');
+}
+
+function updateShipping(country) {
+  const rates = { us: 'Free', ca: '$12.00', uk: '$15.00', au: '$15.00', other: '$18.00' };
+  document.getElementById('shipping-display').textContent = rates[country] || '$18.00';
+}
+</script>
+</body>
+</html>

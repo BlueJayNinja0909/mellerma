@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal — MELLERMA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--blk:#060606;--wht:#f0ece4;--cream:#cec5b0;--gold:#b8943f;--goldl:#d4af6a;--red:#8b0000;--grey:#161616;--mgrey:#2a2a2a;--tgrey:#777;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--blk);color:var(--wht);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-thumb{background:var(--gold);}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:rgba(6,6,6,.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(184,148,63,.15);}
+.nav-logo{font-family:'Cinzel',serif;font-size:20px;font-weight:900;letter-spacing:.3em;color:var(--wht);text-decoration:none;}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--tgrey);text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:var(--goldl);}
+.nav-cta{font-size:10px;letter-spacing:.2em;text-transform:uppercase;padding:9px 22px;border:1px solid rgba(184,148,63,.4);color:var(--goldl);text-decoration:none;transition:all .2s;}
+.nav-cta:hover{background:var(--gold);color:var(--blk);border-color:var(--gold);}
+
+/* PAGE HEADER */
+.page-header{padding:130px 48px 60px;background:linear-gradient(180deg,#080300 0%,var(--blk) 100%);position:relative;overflow:hidden;}
+.page-header::before{content:'©';position:absolute;font-family:'Bebas Neue',sans-serif;font-size:clamp(200px,35vw,480px);color:rgba(255,255,255,.015);bottom:-40px;right:40px;pointer-events:none;line-height:1;}
+.ph-label{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.ph-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,9vw,110px);line-height:.9;letter-spacing:.04em;margin-bottom:20px;}
+.ph-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--cream);letter-spacing:.08em;max-width:540px;line-height:1.7;}
+
+/* TAB NAV */
+.tab-nav{background:var(--grey);border-bottom:1px solid var(--mgrey);position:sticky;top:80px;z-index:100;}
+.tab-nav-inner{max-width:960px;margin:0 auto;display:flex;gap:0;padding:0 48px;overflow-x:auto;}
+.tab-btn{padding:16px 28px;background:none;border:none;border-bottom:2px solid transparent;color:var(--tgrey);font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:all .2s;}
+.tab-btn:hover{color:var(--cream);}
+.tab-btn.active{color:var(--goldl);border-bottom-color:var(--gold);}
+
+/* CONTENT */
+.legal-body{max-width:960px;margin:0 auto;padding:64px 48px 100px;}
+.legal-section{display:none;}
+.legal-section.active{display:block;}
+
+.ls-intro{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--cream);line-height:1.8;margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--mgrey);}
+
+.ls-block{margin-bottom:44px;}
+.ls-block h2{font-family:'Cinzel',serif;font-size:15px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--goldl);margin-bottom:16px;padding-left:16px;border-left:2px solid var(--gold);}
+.ls-block p{font-size:14px;line-height:2;color:var(--cream);margin-bottom:14px;font-weight:300;}
+.ls-block ul{list-style:none;padding:0;}
+.ls-block ul li{font-size:14px;line-height:2;color:var(--cream);font-weight:300;padding-left:20px;position:relative;margin-bottom:4px;}
+.ls-block ul li::before{content:'✦';position:absolute;left:0;color:var(--gold);font-size:9px;top:6px;}
+.ls-block a{color:var(--goldl);text-decoration:none;border-bottom:1px solid rgba(212,175,106,.3);transition:border-color .2s;}
+.ls-block a:hover{border-color:var(--goldl);}
+
+.ls-date{font-size:10px;letter-spacing:.15em;color:var(--tgrey);margin-bottom:32px;text-transform:uppercase;}
+
+.ls-highlight{background:var(--grey);border:1px solid var(--mgrey);border-left:3px solid var(--gold);padding:24px 28px;margin:28px 0;}
+.ls-highlight p{font-size:13px;color:var(--cream);line-height:1.9;margin:0;}
+
+/* BRAND MARKS SECTION */
+.brand-marks{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:28px 0;}
+.bm-item{background:var(--grey);padding:32px;text-align:center;}
+.bm-symbol{font-family:'Bebas Neue',sans-serif;font-size:52px;color:var(--gold);margin-bottom:8px;line-height:1;}
+.bm-name{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream);margin-bottom:4px;}
+.bm-desc{font-size:11px;color:var(--tgrey);line-height:1.6;}
+
+/* CONTACT BAND */
+.contact-band{background:var(--grey);border-top:1px solid var(--mgrey);padding:56px 48px;text-align:center;}
+.cb-inner{max-width:500px;margin:0 auto;}
+.cb-label{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.cb-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,4vw,52px);letter-spacing:.05em;margin-bottom:14px;}
+.cb-text{font-size:14px;color:var(--cream);line-height:1.8;margin-bottom:28px;}
+.cb-email{display:inline-block;padding:13px 32px;border:1px solid rgba(184,148,63,.4);color:var(--goldl);text-decoration:none;font-size:10px;letter-spacing:.2em;text-transform:uppercase;transition:all .25s;}
+.cb-email:hover{background:var(--gold);color:var(--blk);border-color:var(--gold);}
+
+footer{background:#030303;border-top:1px solid rgba(255,255,255,.06);padding:52px 48px 28px;}
+.footer-grid{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+.f-brand h3{font-family:'Cinzel',serif;font-size:18px;font-weight:900;letter-spacing:.3em;margin-bottom:14px;}
+.f-brand p{font-size:12px;color:#444;line-height:1.9;max-width:260px;}
+.f-col h4{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.f-col ul{list-style:none;}.f-col ul li{margin-bottom:9px;}
+.f-col ul li a{font-size:11px;color:#444;text-decoration:none;transition:color .2s;}
+.f-col ul li a:hover{color:var(--wht);}
+.footer-bot{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid rgba(255,255,255,.06);}
+.footer-bot p{font-size:9px;color:#2a2a2a;letter-spacing:.1em;}
+.footer-soc{display:flex;gap:18px;}
+.footer-soc a{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#333;text-decoration:none;transition:color .2s;}
+.footer-soc a:hover{color:var(--gold);}
+
+@media(max-width:768px){
+  nav{padding:15px 20px;}.nav-links{display:none;}
+  .page-header{padding:110px 20px 50px;}
+  .tab-nav-inner{padding:0 12px;}
+  .tab-btn{padding:14px 18px;}
+  .legal-body{padding:44px 20px 80px;}
+  .brand-marks{grid-template-columns:1fr;}
+  .contact-band{padding:56px 20px;}
+  footer{padding:48px 20px 20px;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:28px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">MELLERMA</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="legal.html" style="color:var(--goldl);">Legal</a></li>
+  </ul>
+  <a href="shop.html" class="nav-cta">Shop Now</a>
+</nav>
+
+<div class="page-header">
+  <p class="ph-label">Legal &amp; Policies · Mellerma</p>
+  <h1 class="ph-title">LEGAL &amp;<br>COPYRIGHT</h1>
+  <p class="ph-sub">Everything you need to know about our policies, your rights, and how we protect both the brand and our community.</p>
+</div>
+
+<!-- TAB NAV -->
+<div class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" onclick="showTab('copyright',this)">Copyright</button>
+    <button class="tab-btn" onclick="showTab('privacy',this)">Privacy Policy</button>
+    <button class="tab-btn" onclick="showTab('terms',this)">Terms of Service</button>
+    <button class="tab-btn" onclick="showTab('returns',this)">Returns &amp; Shipping</button>
+  </div>
+</div>
+
+<!-- LEGAL CONTENT -->
+<div class="legal-body">
+
+  <!-- COPYRIGHT -->
+  <div class="legal-section active" id="tab-copyright">
+    <p class="ls-date">Last updated: May 2025</p>
+    <p class="ls-intro">All creative work produced under the Mellerma name is protected intellectual property. This includes our name, logo, graphic designs, and all brand assets. Here's what that means for you.</p>
+
+    <div class="ls-block">
+      <h2>Ownership of Brand Assets</h2>
+      <p>All content associated with Mellerma — including but not limited to the brand name "MELLERMA," the circle cross logo, all garment graphics (Trust God, Crown of Thorns, Thorns &amp; Steel sword and rose design), website design, photography, and written content — is the exclusive intellectual property of Mellerma and its founders.</p>
+      <p>These works are protected under United States copyright law (17 U.S.C. § 101 et seq.) and applicable international copyright treaties.</p>
+    </div>
+
+    <div class="ls-highlight">
+      <p>© 2025 Mellerma. All rights reserved. Unauthorized reproduction, distribution, or use of any Mellerma brand assets — in whole or in part — without explicit written permission is strictly prohibited and may result in legal action.</p>
+    </div>
+
+    <div class="ls-block">
+      <h2>Protected Brand Elements</h2>
+      <ul>
+        <li>The "MELLERMA" name and wordmark in any typography or format</li>
+        <li>The circle cross logo with star field — the primary brand emblem</li>
+        <li>"Trust God" Crown of Thorns graphic and all associated artwork</li>
+        <li>"Thorns &amp; Steel" sword and rose rhinestone design</li>
+        <li>All product photography, model imagery, and campaign content</li>
+        <li>Website layout, code, UI design, and written copy</li>
+        <li>The phrase "A Unified Mindset" as used in Mellerma branding</li>
+        <li>All social media content posted under @mellerma.wrld</li>
+      </ul>
+    </div>
+
+    <div class="ls-block">
+      <h2>Our Brand Marks</h2>
+      <div class="brand-marks">
+        <div class="bm-item">
+          <div class="bm-symbol">⊕</div>
+          <div class="bm-name">Circle Cross Logo</div>
+          <div class="bm-desc">Primary emblem — cross within a star-field circle. Trademark of Mellerma.</div>
+        </div>
+        <div class="bm-item">
+          <div class="bm-symbol" style="font-size:28px;font-family:'Cinzel',serif;letter-spacing:.1em;padding-top:8px;">MELLERMA</div>
+          <div class="bm-name">Wordmark</div>
+          <div class="bm-desc">The brand name in any format. Not to be reproduced without written consent.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ls-block">
+      <h2>What You CAN Do</h2>
+      <ul>
+        <li>Share photos of yourself wearing Mellerma products on social media — and tag us @mellerma.wrld</li>
+        <li>Write reviews, blog posts, or feature Mellerma in editorial coverage</li>
+        <li>Share links to our website and product pages</li>
+        <li>Screenshot or save our posts for personal, non-commercial reference</li>
+      </ul>
+    </div>
+
+    <div class="ls-block">
+      <h2>What You CANNOT Do</h2>
+      <ul>
+        <li>Reproduce, copy, or replicate our logo, graphics, or designs on any product</li>
+        <li>Sell, resell, or profit from any Mellerma design or brand asset</li>
+        <li>Use our brand name or marks in a way that implies endorsement or partnership without written agreement</li>
+        <li>Create counterfeit, knockoff, or imitation Mellerma products</li>
+        <li>Use our photography or creative content without prior written permission</li>
+        <li>Modify or create derivative works from our designs</li>
+      </ul>
+    </div>
+
+    <div class="ls-block">
+      <h2>Reporting Infringement</h2>
+      <p>If you believe your intellectual property rights have been violated, or if you spot counterfeit Mellerma products, please report it immediately. We take this seriously and will act fast.</p>
+      <p>Email: <a href="mailto:mellerma_wrld2026@gmail.com">mellerma_wrld2026@gmail.com</a> with the subject line "IP Report" and include any relevant details or links.</p>
+    </div>
+
+    <div class="ls-block">
+      <h2>Licensing &amp; Collaboration</h2>
+      <p>Interested in a collaboration, licensing partnership, or brand deal? We're open to working with aligned artists, creators, and brands. Reach out directly — all official partnerships require a signed written agreement.</p>
+      <p>Contact: <a href="mailto:mellerma_wrld2026@gmail.com">mellerma_wrld2026@gmail.com</a></p>
+    </div>
+  </div>
+
+  <!-- PRIVACY POLICY -->
+  <div class="legal-section" id="tab-privacy">
+    <p class="ls-date">Last updated: May 2025</p>
+    <p class="ls-intro">Your privacy matters. We collect only what we need, never sell your data, and use it solely to process your orders and improve your experience.</p>
+
+    <div class="ls-block">
+      <h2>Information We Collect</h2>
+      <ul>
+        <li><strong>Order information:</strong> name, email, shipping address, and payment details when you make a purchase</li>
+        <li><strong>Contact information:</strong> email address if you subscribe to our newsletter or contact us</li>
+        <li><strong>Usage data:</strong> pages visited, time on site, device type (collected anonymously via standard web analytics)</li>
+        <li><strong>Cookies:</strong> standard session cookies to maintain your browsing session</li>
+      </ul>
+    </div>
+
+    <div class="ls-block">
+      <h2>How We Use Your Information</h2>
+      <ul>
+        <li>To process and fulfill your orders</li>
+        <li>To send order confirmations and shipping updates</li>
+        <li>To respond to customer service inquiries</li>
+        <li>To send drop alerts and newsletters (only if you opted in)</li>
+        <li>To improve our website and product offerings</li>
+      </ul>
+    </div>
+
+    <div class="ls-highlight">
+      <p><strong>We do not sell, trade, or share your personal information with third parties</strong> for marketing purposes. Payment information is processed securely and never stored on our servers.</p>
+    </div>
+
+    <div class="ls-block">
+      <h2>Payment Security</h2>
+      <p>All payment transactions are encrypted using industry-standard SSL (Secure Socket Layer) technology. Card payments are processed through PCI-DSS compliant payment processors. We never store full card numbers on our systems.</p>
+    </div>
+
+    <div class="ls-block">
+      <h2>Your Rights</h2>
+      <ul>
+        <li>Request a copy of the personal data we hold about you</li>
+        <li>Request correction of inaccurate data</li>
+        <li>Request deletion of your data ("right to be forgotten")</li>
+        <li>Opt out of marketing emails at any time via the unsubscribe link</li>
+        <li>Contact us at <a href="mailto:mellerma_wrld2026@gmail.com">mellerma_wrld2026@gmail.com</a> for any data requests</li>
+      </ul>
+    </div>
+
+    <div class="ls-block">
+      <h2>Cookies</h2>
+      <p>We use essential cookies to keep the site functional. We do not use tracking cookies for advertising. You can disable cookies in your browser settings, though some site features may not work correctly.</p>
+    </div>
+  </div>
+
+  <!-- TERMS OF SERVICE -->
+  <div class="legal-section" id="tab-terms">
+    <p class="ls-date">Last updated: May 2025</p>
+    <p class="ls-intro">By accessing mellerma.com or purchasing from us, you agree to these terms. Please read them — they're straightforward and protect both you and us.</p>
+
+    <div class="ls-block">
+      <h2>Use of the Website</h2>
+      <p>This website is for personal, non-commercial use. You may not use this site to engage in any unlawful activity, scrape content, attempt to breach security, or misrepresent your identity. We reserve the right to refuse service to anyone at our discretion.</p>
+    </div>
+
+    <div class="ls-block">
+      <h2>Product Information</h2>
+      <p>We do our best to accurately represent all products — including colors, materials, and sizing. Slight variations may occur due to screen calibration and the hand-applied nature of our rhinestone details (which makes each piece slightly unique).</p>
+      <ul>
+        <li>All prices are listed in USD and subject to change without notice</li>
+        <li>We reserve the right to cancel orders at our discretion (you will be fully refunded)</li>
+        <li>Product availability is not guaranteed until order is confirmed</li>
+      </ul>
+    </div>
+
+    <div class="ls-block">
+      <h2>Purchases &amp; Payment</h2>
+      <ul>
+        <li>Full payment is required at the time of purchase</li>
+        <li>We accept major credit cards and PayPal</li>
+        <li>You represent that you are authorized to use the payment method provided</li>
+        <li>Orders are subject to verification and may be cancelled if fraud is suspected</li>
+      </ul>
+    </div>
+
+    <div class="ls-block">
+      <h2>Intellectual Property</h2>
+      <p>All content on this website — including designs, graphics, text, logos, and photography — is the property of Mellerma and protected by copyright law. See our Copyright section for full details.</p>
+    </div>
+
+    <div class="ls-block">
+      <h2>Limitation of Liability</h2>
+      <p>Mellerma is not liable for indirect, incidental, or consequential damages arising from the use of our products or website. Our total liability is limited to the amount paid for the specific product in question.</p>
+    </div>
+
+    <div class="ls-block">
+      <h2>Governing Law</h2>
+      <p>These terms are governed by the laws of the United States. Any disputes shall be resolved in the appropriate courts of jurisdiction.</p>
+    </div>
+
+    <div class="ls-block">
+      <h2>Changes to Terms</h2>
+      <p>We may update these terms at any time. Continued use of the website after changes constitutes acceptance of the updated terms. We'll update the "Last updated" date at the top of this page.</p>
+    </div>
+  </div>
+
+  <!-- RETURNS & SHIPPING -->
+  <div class="legal-section" id="tab-returns">
+    <p class="ls-date">Last updated: May 2025</p>
+    <p class="ls-intro">We want you to love every Mellerma piece. If something isn't right, here's exactly how we handle it — no runaround.</p>
+
+    <div class="ls-block">
+      <h2>Shipping</h2>
+      <ul>
+        <li><strong>Standard shipping:</strong> 5–8 business days (United States)</li>
+        <li><strong>Express shipping:</strong> 2–3 business days (available at checkout)</li>
+        <li><strong>International:</strong> 10–21 business days depending on destination</li>
+        <li><strong>Free shipping</strong> on all orders over $100</li>
+        <li>Orders are processed within 1–3 business days of purchase</li>
+        <li>You'll receive a tracking number via email once your order ships</li>
+      </ul>
+    </div>
+
+    <div class="ls-highlight">
+      <p>Due to the hand-applied rhinestone details on our products, processing times may occasionally extend to 3–5 business days to ensure quality control on every piece.</p>
+    </div>
+
+    <div class="ls-block">
+      <h2>Returns</h2>
+      <ul>
+        <li>Returns accepted within <strong>14 days</strong> of delivery</li>
+        <li>Items must be unworn, unwashed, and in original condition with tags attached</li>
+        <li>Items showing signs of wear, washing, or damage are not eligible for return</li>
+        <li>Sale items are final sale — no returns or exchanges</li>
+      </ul>
+    </div>
+
+    <div class="ls-block">
+      <h2>How to Start a Return</h2>
+      <ul>
+        <li>Email <a href="mailto:mellerma_wrld2026@gmail.com">mellerma_wrld2026@gmail.com</a> with subject line "Return Request"</li>
+        <li>Include your order number, the item(s) you're returning, and the reason</li>
+        <li>We'll respond within 2 business days with return instructions</li>
+        <li>Return shipping costs are the responsibility of the customer unless the item arrived damaged or incorrect</li>
+        <li>Refunds are processed within 5–7 business days of receiving the returned item</li>
+      </ul>
+    </div>
+
+    <div class="ls-block">
+      <h2>Exchanges</h2>
+      <p>We offer exchanges for size or color where available. Start an exchange the same way as a return — email us and we'll sort it out. Exchanges are subject to stock availability.</p>
+    </div>
+
+    <div class="ls-block">
+      <h2>Damaged or Wrong Items</h2>
+      <p>If you received a damaged item or the wrong product, we sincerely apologize and will make it right immediately. Email <a href="mailto:mellerma_wrld2026@gmail.com">mellerma_wrld2026@gmail.com</a> within 7 days of delivery with photos and your order number. We'll cover all return shipping and send a replacement or full refund.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- CONTACT -->
+<div class="contact-band">
+  <div class="cb-inner">
+    <p class="cb-label">Questions?</p>
+    <h2 class="cb-title">REACH OUT DIRECTLY</h2>
+    <p class="cb-text">For any legal, copyright, or policy questions — or anything else — reach us directly. We respond within 2 business days.</p>
+    <a href="mailto:mellerma_wrld2026@gmail.com" class="cb-email">mellerma_wrld2026@gmail.com</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="f-brand"><h3>MELLERMA</h3><p>A unified mindset. Not made to follow trends — made to create our own lane.</p></div>
+    <div class="f-col"><h4>Shop</h4><ul><li><a href="product-tee.html">Trust God Tee</a></li><li><a href="product-pants.html">Thorns &amp; Steel Sweats</a></li></ul></div>
+    <div class="f-col"><h4>Brand</h4><ul><li><a href="about.html">About</a></li><li><a href="index.html">Home</a></li></ul></div>
+    <div class="f-col"><h4>Legal</h4><ul>
+      <li><a href="legal.html">Copyright</a></li>
+      <li><a href="legal.html" onclick="setTimeout(()=>showTab('privacy',document.querySelectorAll('.tab-btn')[1]),100)">Privacy Policy</a></li>
+      <li><a href="legal.html" onclick="setTimeout(()=>showTab('terms',document.querySelectorAll('.tab-btn')[2]),100)">Terms of Service</a></li>
+      <li><a href="legal.html" onclick="setTimeout(()=>showTab('returns',document.querySelectorAll('.tab-btn')[3]),100)">Returns &amp; Shipping</a></li>
+      <li><a href="mailto:mellerma_wrld2026@gmail.com">Email Us</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bot">
+    <p>© 2025 Mellerma. All rights reserved.</p>
+    <div class="footer-soc"><a href="https://www.instagram.com/mellerma.wrld" target="_blank">Instagram</a><a href="#">TikTok</a></div>
+  </div>
+</footer>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.legal-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  // Scroll to top of content
+  document.querySelector('.tab-nav').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Handle hash links
+const hash = window.location.hash;
+if (hash === '#privacy') showTab('privacy', document.querySelectorAll('.tab-btn')[1]);
+if (hash === '#terms') showTab('terms', document.querySelectorAll('.tab-btn')[2]);
+if (hash === '#returns') showTab('returns', document.querySelectorAll('.tab-btn')[3]);
+</script>
+</body>
+</html>
