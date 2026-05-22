@@ -19,8 +19,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .nav-back:hover{border-color:var(--gold);color:var(--gold);}
 .product-page{padding-top:80px;display:grid;grid-template-columns:1fr 1fr;min-height:100vh;}
 .gallery{position:sticky;top:80px;height:calc(100vh - 80px);background:#0d0d0d;display:flex;flex-direction:column;}
-.gallery-main{flex:1;overflow:hidden;position:relative;}
-.gallery-main img{width:100%;height:100%;object-fit:cover;transition:opacity .4s;}
+.gallery-main{flex:1;overflow:hidden;position:relative;background:#0d0d0d;display:flex;align-items:center;justify-content:center;}
+.gallery-main img{width:100%;height:100%;object-fit:contain;background:#0d0d0d;transition:opacity .4s;}
 .gallery-main img.fade{opacity:0;}
 .gallery-thumbs{display:flex;gap:2px;padding:2px;background:var(--blk);}
 .g-thumb{flex:1;height:88px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:border-color .2s;}
@@ -130,7 +130,7 @@ footer{background:#030303;border-top:1px solid rgba(255,255,255,.06);padding:52p
 #zoom-lightbox .zoom-close{position:absolute;top:20px;right:24px;background:none;border:none;color:#f0ece4;font-size:28px;cursor:pointer;z-index:20;line-height:1;transition:color .2s;}
 #zoom-lightbox .zoom-close:hover{color:#d4af6a;}
 #zoom-hint-lb{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:#444;pointer-events:none;white-space:nowrap;}
-#zoom-img{max-width:88vw;max-height:88vh;object-fit:contain;transition:transform .18s ease,transform-origin .18s ease;cursor:zoom-in;user-select:none;display:block;}
+#zoom-img{max-width:88vw;max-height:88vh;object-fit:contain;transition:transform .15s ease;cursor:zoom-in;user-select:none;display:block;}
 #zoom-minimap{position:absolute;right:24px;top:50%;transform:translateY(-50%);width:100px;height:130px;border:1px solid rgba(184,148,63,.4);background:rgba(0,0,0,.5);overflow:hidden;}
 #zoom-minimap img{width:100%;height:100%;object-fit:cover;opacity:.7;}
 #minimap-dot{position:absolute;width:22%;height:22%;border:2px solid #d4af6a;background:rgba(212,175,106,.15);pointer-events:none;transition:left .1s,top .1s;}
@@ -309,17 +309,23 @@ footer{background:#030303;border-top:1px solid rgba(255,255,255,.06);padding:52p
 
 <div class="toast" id="toast"></div>
 <script>
-let selectedSize=null;
+let selectedSize = null;
+
+/* ════════════════════════════════════════
+   ZOOM SYSTEM — clean rewrite
+   Uses container-relative mouse tracking
+   so panning never glitches at edges
+   ════════════════════════════════════════ */
 let currentZoomSrc = 'pants_front.jpg';
-let zoomScale = 1;
-const MAX_ZOOM = 3.5;
+let isZoomed = false;
+const ZOOM_LEVEL = 3;
 
 function switchImg(src, thumb) {
   const img = document.getElementById('main-img');
   const preload = new Image();
   preload.onload = function() {
-    img.classList.add('fade');
-    setTimeout(() => { img.src = src; img.classList.remove('fade'); }, 80);
+    img.style.opacity = '0';
+    setTimeout(() => { img.src = src; img.style.opacity = '1'; }, 120);
   };
   preload.onerror = function() { img.src = src; };
   preload.src = src;
@@ -331,9 +337,9 @@ function switchImg(src, thumb) {
 }
 
 function openZoom() {
-  const lb = document.getElementById('zoom-lightbox');
+  const lb   = document.getElementById('zoom-lightbox');
   const zimg = document.getElementById('zoom-img');
-  const mb = document.getElementById('minimap-bg');
+  const mb   = document.getElementById('minimap-bg');
   zimg.src = currentZoomSrc;
   if (mb) mb.src = currentZoomSrc;
   lb.classList.add('open');
@@ -344,79 +350,103 @@ function openZoom() {
 function closeZoom() {
   document.getElementById('zoom-lightbox').classList.remove('open');
   document.body.style.overflow = '';
+  resetZoom();
 }
 
 function resetZoom() {
-  zoomScale = 1;
+  isZoomed = false;
   const zimg = document.getElementById('zoom-img');
-  if (zimg) {
-    zimg.style.transform = 'scale(1)';
-    zimg.style.transformOrigin = '50% 50%';
-    zimg.style.cursor = 'zoom-in';
-  }
+  if (!zimg) return;
+  zimg.style.transform = '';
+  zimg.style.left = '';
+  zimg.style.top  = '';
+  zimg.style.cursor = 'zoom-in';
   updateMinimap(50, 50);
 }
 
-function updateMinimap(px, py) {
+function updateMinimap(pxPct, pyPct) {
   const dot = document.getElementById('minimap-dot');
   if (!dot) return;
-  dot.style.left = Math.max(5, Math.min(78, px - 11)) + '%';
-  dot.style.top  = Math.max(5, Math.min(78, py - 11)) + '%';
+  // dot centre = viewport centre within full image
+  const dotW = 22, dotH = 22; // % of minimap
+  dot.style.left = Math.max(0, Math.min(100 - dotW, pxPct - dotW / 2)) + '%';
+  dot.style.top  = Math.max(0, Math.min(100 - dotH, pyPct - dotH / 2)) + '%';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Make gallery image clickable
   const mainImg = document.getElementById('main-img');
   if (mainImg) {
     mainImg.style.cursor = 'zoom-in';
     mainImg.addEventListener('click', openZoom);
   }
 
-  const zimg = document.getElementById('zoom-img');
   const lb   = document.getElementById('zoom-lightbox');
-  if (!zimg) return;
+  const zimg = document.getElementById('zoom-img');
+  if (!lb || !zimg) return;
 
-  // Click: toggle zoom level
+  /* ── We track mouse on the LIGHTBOX (full viewport)
+         and map it to 0-100% of the image. This way
+         there is no edge-lock issue — the container
+         never moves, only the transform-origin changes. ── */
+
+  let mouseX = 50, mouseY = 50; // % across image
+
+  lb.addEventListener('mousemove', function(e) {
+    if (!isZoomed) return;
+
+    // Get the image's natural rendered rect
+    const r = zimg.getBoundingClientRect();
+
+    // Clamp mouse to image bounds
+    const cx = Math.max(r.left, Math.min(r.right,  e.clientX));
+    const cy = Math.max(r.top,  Math.min(r.bottom, e.clientY));
+
+    mouseX = ((cx - r.left) / r.width)  * 100;
+    mouseY = ((cy - r.top)  / r.height) * 100;
+
+    zimg.style.transformOrigin = mouseX + '% ' + mouseY + '%';
+    updateMinimap(mouseX, mouseY);
+  });
+
+  // Click to toggle zoom
   zimg.addEventListener('click', function(e) {
-    if (zoomScale < 2) {
-      zoomScale = MAX_ZOOM;
+    e.stopPropagation();
+    if (!isZoomed) {
+      // Zoom into clicked point
+      const r = zimg.getBoundingClientRect();
+      mouseX = ((e.clientX - r.left) / r.width)  * 100;
+      mouseY = ((e.clientY - r.top)  / r.height) * 100;
+      zimg.style.transformOrigin = mouseX + '% ' + mouseY + '%';
+      zimg.style.transform = 'scale(' + ZOOM_LEVEL + ')';
       zimg.style.cursor = 'zoom-out';
-      const rect = zimg.getBoundingClientRect();
-      const px = ((e.clientX - rect.left) / rect.width) * 100;
-      const py = ((e.clientY - rect.top)  / rect.height) * 100;
-      zimg.style.transformOrigin = px + '% ' + py + '%';
-      zimg.style.transform = 'scale(' + MAX_ZOOM + ')';
-      updateMinimap(px, py);
+      isZoomed = true;
+      updateMinimap(mouseX, mouseY);
     } else {
-      zoomScale = 1;
-      zimg.style.cursor = 'zoom-in';
-      zimg.style.transform = 'scale(1)';
-      zimg.style.transformOrigin = '50% 50%';
-      updateMinimap(50, 50);
+      resetZoom();
     }
   });
 
-  // Mouse move: pan when zoomed
-  zimg.addEventListener('mousemove', function(e) {
-    if (zoomScale < 2) return;
-    const rect = zimg.getBoundingClientRect();
-    const px = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width)  * 100));
-    const py = Math.max(0, Math.min(100, ((e.clientY - rect.top)  / rect.height) * 100));
-    zimg.style.transformOrigin = px + '% ' + py + '%';
-    updateMinimap(px, py);
-  });
-
-  // Scroll wheel: smooth zoom in/out
-  lb && lb.addEventListener('wheel', function(e) {
+  // Scroll wheel to zoom in/out smoothly
+  let scrollScale = 1;
+  lb.addEventListener('wheel', function(e) {
     e.preventDefault();
-    zoomScale = Math.max(1, Math.min(MAX_ZOOM, zoomScale - e.deltaY * 0.006));
-    zimg.style.transform = 'scale(' + zoomScale + ')';
-    zimg.style.cursor = zoomScale > 1 ? 'zoom-out' : 'zoom-in';
-    if (zoomScale <= 1) { zimg.style.transformOrigin = '50% 50%'; updateMinimap(50, 50); }
+    if (!isZoomed && e.deltaY > 0) return; // don't zoom out below 1
+    if (!isZoomed) {
+      // Start zoom on scroll up
+      isZoomed = true;
+      zimg.style.cursor = 'zoom-out';
+      zimg.style.transformOrigin = '50% 50%';
+      scrollScale = 1;
+    }
+    scrollScale = Math.max(1, Math.min(ZOOM_LEVEL + 1, scrollScale - e.deltaY * 0.005));
+    zimg.style.transform = 'scale(' + scrollScale + ')';
+    if (scrollScale <= 1) { resetZoom(); scrollScale = 1; }
   }, { passive: false });
 
-  // ESC
+  // ESC key
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') { closeZoom(); }
+    if (e.key === 'Escape') closeZoom();
   });
 });
 function selectSize(btn){document.querySelectorAll('.sz').forEach(b=>b.classList.remove('active'));btn.classList.add('active');selectedSize=btn.textContent;}
