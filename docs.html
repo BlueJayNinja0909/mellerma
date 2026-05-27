@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Documentation — MELLERMA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--blk:#060606;--wht:#f0ece4;--cream:#cec5b0;--gold:#b8943f;--goldl:#d4af6a;--grey:#111;--mgrey:#222;--tgrey:#666;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:#fff;color:#111;font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.8;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-thumb{background:var(--gold);}
+
+/* PAGE */
+.doc-wrap{max-width:960px;margin:0 auto;padding:60px 48px 100px;}
+
+/* HEADER */
+.doc-header{border-bottom:3px solid #111;padding-bottom:24px;margin-bottom:48px;}
+.doc-header h1{font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:.05em;margin-bottom:6px;}
+.doc-header .sub{font-size:13px;color:#555;letter-spacing:.05em;}
+.doc-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:28px;border:1px solid #ddd;}
+.doc-meta-item{padding:14px 18px;border-right:1px solid #ddd;}
+.doc-meta-item:last-child{border-right:none;}
+.doc-meta-item .label{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:#999;margin-bottom:4px;}
+.doc-meta-item .val{font-size:13px;font-weight:500;color:#111;}
+
+/* TOC */
+.toc{background:#f8f8f8;border:1px solid #ddd;padding:28px 32px;margin-bottom:48px;}
+.toc h3{font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;margin-bottom:16px;}
+.toc ol{padding-left:20px;}
+.toc ol li{margin-bottom:6px;}
+.toc a{font-size:13px;color:#333;text-decoration:none;border-bottom:1px solid #ddd;transition:color .2s,border-color .2s;}
+.toc a:hover{color:var(--gold);border-color:var(--gold);}
+
+/* SECTIONS */
+.doc-section{margin-bottom:56px;}
+.doc-section h2{font-family:'Cinzel',serif;font-size:18px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-bottom:2px solid #111;padding-bottom:10px;margin-bottom:24px;}
+.doc-section h3{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin:24px 0 10px;}
+.doc-section p{font-size:14px;line-height:1.9;color:#333;margin-bottom:14px;}
+.doc-section ul, .doc-section ol{padding-left:24px;margin-bottom:14px;}
+.doc-section ul li, .doc-section ol li{font-size:14px;line-height:1.9;color:#333;margin-bottom:4px;}
+
+/* SKETCH BOXES */
+.sketch-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0;}
+.sketch-single{margin:24px 0;}
+.sketch-box{border:1.5px solid #bbb;background:#fafafa;padding:8px;}
+.sketch-box svg{width:100%;display:block;}
+.sketch-caption{font-size:11px;color:#888;text-align:center;margin-top:8px;letter-spacing:.05em;font-style:italic;}
+
+/* COLOR PALETTE */
+.palette{display:flex;gap:0;margin:16px 0;border:1px solid #ddd;overflow:hidden;}
+.swatch{flex:1;height:60px;display:flex;align-items:flex-end;padding:6px 8px;}
+.swatch span{font-size:9px;letter-spacing:.1em;color:rgba(255,255,255,.8);font-weight:500;}
+.swatch.light span{color:rgba(0,0,0,.5);}
+
+/* TYPOGRAPHY TABLE */
+.type-table{width:100%;border-collapse:collapse;margin:16px 0;}
+.type-table th{font-size:9px;letter-spacing:.2em;text-transform:uppercase;background:#f0f0f0;padding:10px 14px;text-align:left;border:1px solid #ddd;}
+.type-table td{padding:12px 14px;border:1px solid #ddd;font-size:13px;vertical-align:top;}
+
+/* PAGE INVENTORY TABLE */
+.page-table{width:100%;border-collapse:collapse;margin:16px 0;}
+.page-table th{font-size:9px;letter-spacing:.2em;text-transform:uppercase;background:#111;color:#fff;padding:10px 14px;text-align:left;}
+.page-table td{padding:11px 14px;border-bottom:1px solid #eee;font-size:13px;vertical-align:top;}
+.page-table tr:nth-child(even) td{background:#f9f9f9;}
+.tag{display:inline-block;padding:2px 8px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;border-radius:2px;font-weight:600;}
+.tag-done{background:#e8f5e9;color:#2e7d32;}
+.tag-live{background:#fff3e0;color:#e65100;}
+
+/* CONTENT PLAN */
+.content-block{border-left:3px solid var(--gold);padding:12px 18px;margin-bottom:16px;background:#fffdf7;}
+.content-block .cb-page{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.content-block .cb-title{font-size:14px;font-weight:600;margin-bottom:6px;}
+.content-block .cb-items{font-size:13px;color:#444;line-height:1.8;}
+
+/* TECH STACK */
+.tech-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0;}
+.tech-item{border:1px solid #ddd;padding:16px;text-align:center;}
+.tech-item .ti-icon{font-size:28px;margin-bottom:8px;}
+.tech-item .ti-name{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+.tech-item .ti-desc{font-size:11px;color:#888;line-height:1.5;}
+
+/* GOALS */
+.goals-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+.goal-item{border:1px solid #ddd;padding:18px 20px;}
+.goal-item .gi-num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:#ddd;line-height:1;margin-bottom:4px;}
+.goal-item .gi-title{font-size:13px;font-weight:700;letter-spacing:.08em;margin-bottom:6px;}
+.goal-item .gi-desc{font-size:12px;color:#666;line-height:1.7;}
+
+/* WIREFLOW ARROW */
+.wireflow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:16px 0;padding:18px;background:#f8f8f8;border:1px solid #ddd;}
+.wf-box{padding:8px 14px;border:1.5px solid #bbb;background:#fff;font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;white-space:nowrap;}
+.wf-arrow{font-size:18px;color:#bbb;}
+
+/* TIMELINE */
+.timeline{margin:16px 0;}
+.tl-item{display:grid;grid-template-columns:120px 1fr;gap:20px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #eee;}
+.tl-item:last-child{border-bottom:none;}
+.tl-phase{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:600;padding-top:2px;}
+.tl-desc{font-size:13px;color:#333;line-height:1.8;}
+
+/* PRINT */
+@media print{
+  body{font-size:12px;}
+  .doc-wrap{padding:20px;}
+  .sketch-grid{grid-template-columns:1fr 1fr;}
+}
+
+@media(max-width:700px){
+  .doc-wrap{padding:32px 20px 80px;}
+  .sketch-grid{grid-template-columns:1fr;}
+  .tech-grid{grid-template-columns:1fr 1fr;}
+  .goals-grid{grid-template-columns:1fr;}
+  .doc-meta{grid-template-columns:1fr;}
+  .doc-meta-item{border-right:none;border-bottom:1px solid #ddd;}
+}
+</style>
+</head>
+<body>
+<div class="doc-wrap">
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <h1>MELLERMA — Project Documentation</h1>
+    <div class="sub">Web Design & Development · Planning Documentation · 2026</div>
+    <div class="doc-meta">
+      <div class="doc-meta-item">
+        <div class="label">Project Name</div>
+        <div class="val">Mellerma — Brand Website</div>
+      </div>
+      <div class="doc-meta-item">
+        <div class="label">Type</div>
+        <div class="val">E-Commerce / Brand Site</div>
+      </div>
+      <div class="doc-meta-item">
+        <div class="label">Status</div>
+        <div class="val">In Development · 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <h3>Table of Contents</h3>
+    <ol>
+      <li><a href="#overview">Project Overview & Goals</a></li>
+      <li><a href="#audience">Target Audience</a></li>
+      <li><a href="#sitemap">Site Map & Page Inventory</a></li>
+      <li><a href="#wireflows">User Flow Diagrams</a></li>
+      <li><a href="#sketches">Design Layout Sketches</a></li>
+      <li><a href="#visual">Visual Design System</a></li>
+      <li><a href="#content">Content Plan</a></li>
+      <li><a href="#tech">Technical Stack</a></li>
+      <li><a href="#features">Features & Functionality</a></li>
+      <li><a href="#timeline">Development Timeline</a></li>
+      <li><a href="#testing">Testing & QA</a></li>
+    </ol>
+  </div>
+
+  <!-- 1. OVERVIEW -->
+  <div class="doc-section" id="overview">
+    <h2>1. Project Overview &amp; Goals</h2>
+    <p>Mellerma is an independent streetwear brand built around a core philosophy: <em>"Not made to follow trends. Made to create our own lane. Lowkey movement. High ambition."</em> The website serves as the brand's primary digital presence — a place to sell clothing, communicate the brand's identity, and build a community around a unified mindset.</p>
+    <p>The project involves designing and developing a complete multi-page e-commerce website from scratch using HTML, CSS, and JavaScript — no page builders, no templates. Every design decision is intentional and tied to the brand's aesthetic: dark, minimal, premium, and purposeful.</p>
+
+    <h3>Primary Goals</h3>
+    <div class="goals-grid">
+      <div class="goal-item">
+        <div class="gi-num">01</div>
+        <div class="gi-title">Sell Products Online</div>
+        <div class="gi-desc">Enable customers to browse, select a size, and purchase clothing directly through the site using PayPal. No third-party store platform — fully custom built.</div>
+      </div>
+      <div class="goal-item">
+        <div class="gi-num">02</div>
+        <div class="gi-title">Communicate Brand Identity</div>
+        <div class="gi-desc">Every page should feel like the brand — dark backgrounds, gold accents, sacred imagery, editorial typography. The design itself is part of the message.</div>
+      </div>
+      <div class="goal-item">
+        <div class="gi-num">03</div>
+        <div class="gi-title">Build Community</div>
+        <div class="gi-desc">Email signup, Instagram links, and brand manifesto content to attract and retain people who connect with the movement, not just the product.</div>
+      </div>
+      <div class="goal-item">
+        <div class="gi-num">04</div>
+        <div class="gi-title">Professional Credibility</div>
+        <div class="gi-desc">Legal pages, secure checkout, professional copywriting, and polished UI to establish the brand as a real, trustworthy business from day one.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. TARGET AUDIENCE -->
+  <div class="doc-section" id="audience">
+    <h2>2. Target Audience</h2>
+    <p>Mellerma is designed for a specific person — not a broad demographic. The brand speaks to young adults (16–28) who:</p>
+    <ul>
+      <li>Identify with streetwear and urban culture but want something more meaningful than mainstream brands</li>
+      <li>Come from different backgrounds but share a mindset of ambition, faith, and self-building</li>
+      <li>Appreciate premium quality and unique design details (rhinestones, graphic prints, heavyweight fabric)</li>
+      <li>Discover brands through social media — primarily TikTok and Instagram</li>
+      <li>Value authenticity — they can tell when something is made with intention vs. mass-produced</li>
+    </ul>
+
+    <h3>User Needs</h3>
+    <ul>
+      <li>To quickly understand what the brand is about when they land on the site</li>
+      <li>To see the product clearly — multiple angles, detail shots, size information</li>
+      <li>To purchase easily and securely without friction</li>
+      <li>To feel like they're joining something, not just buying something</li>
+    </ul>
+  </div>
+
+  <!-- 3. SITE MAP -->
+  <div class="doc-section" id="sitemap">
+    <h2>3. Site Map &amp; Page Inventory</h2>
+    <p>The site consists of 8 public-facing pages plus this documentation page. All pages share a consistent navigation bar and footer.</p>
+
+    <table class="page-table">
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Page Name</th>
+          <th>Purpose</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>index.html</code></td>
+          <td>Homepage</td>
+          <td>Hero section, product preview, brand manifesto, email signup</td>
+          <td><span class="tag tag-done">Complete</span></td>
+        </tr>
+        <tr>
+          <td><code>shop.html</code></td>
+          <td>Shop</td>
+          <td>Full product grid, Instagram photo gallery, spec stats</td>
+          <td><span class="tag tag-done">Complete</span></td>
+        </tr>
+        <tr>
+          <td><code>product-tee.html</code></td>
+          <td>Trust God Tee</td>
+          <td>Product detail page — gallery, specs, size selector, purchase button, zoom feature</td>
+          <td><span class="tag tag-done">Complete</span></td>
+        </tr>
+        <tr>
+          <td><code>product-pants.html</code></td>
+          <td>Thorns &amp; Steel Sweats</td>
+          <td>Product detail page — gallery, specs, size selector, purchase button, zoom feature</td>
+          <td><span class="tag tag-done">Complete</span></td>
+        </tr>
+        <tr>
+          <td><code>checkout-tee.html</code></td>
+          <td>Checkout (Tee)</td>
+          <td>Order summary, shipping form, PayPal payment, order confirmation</td>
+          <td><span class="tag tag-done">Complete</span></td>
+        </tr>
+        <tr>
+          <td><code>checkout-pants.html</code></td>
+          <td>Checkout (Sweats)</td>
+          <td>Order summary, shipping form, PayPal payment, order confirmation</td>
+          <td><span class="tag tag-done">Complete</span></td>
+        </tr>
+        <tr>
+          <td><code>about.html</code></td>
+          <td>About</td>
+          <td>Brand story, four pillars, full manifesto, community photos, contact</td>
+          <td><span class="tag tag-done">Complete</span></td>
+        </tr>
+        <tr>
+          <td><code>legal.html</code></td>
+          <td>Legal &amp; Copyright</td>
+          <td>4-tab page: Copyright, Privacy Policy, Terms of Service, Returns &amp; Shipping</td>
+          <td><span class="tag tag-done">Complete</span></td>
+        </tr>
+        <tr>
+          <td><code>docs.html</code></td>
+          <td>Documentation</td>
+          <td>Project planning documentation (this page) — hidden from public nav</td>
+          <td><span class="tag tag-live">Hidden</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 4. USER FLOWS -->
+  <div class="doc-section" id="wireflows">
+    <h2>4. User Flow Diagrams</h2>
+    <p>The following diagrams show how a user navigates through the key paths on the site.</p>
+
+    <h3>Primary Purchase Flow</h3>
+    <div class="wireflow">
+      <div class="wf-box">Homepage</div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-box">Shop</div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-box">Product Page</div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-box">Select Size</div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-box">Checkout</div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-box">PayPal</div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-box">Order Confirmed</div>
+    </div>
+
+    <h3>Brand Discovery Flow</h3>
+    <div class="wireflow">
+      <div class="wf-box">Instagram / TikTok</div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-box">Homepage</div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-box">About Page</div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-box">Email Signup</div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-box">Shop</div>
+    </div>
+
+    <h3>Direct Product Flow (from social link)</h3>
+    <div class="wireflow">
+      <div class="wf-box">Social Media Link</div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-box">Product Page</div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-box">Zoom / View Images</div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-box">Select Size</div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-box">Checkout</div>
+    </div>
+  </div>
+
+  <!-- 5. SKETCHES -->
+  <div class="doc-section" id="sketches">
+    <h2>5. Design Layout Sketches</h2>
+    <p>The following wireframe sketches were created during the planning phase to establish layout structure before visual design. They represent the intended content hierarchy and component placement for each major page.</p>
+
+    <h3>Homepage Layout</h3>
+    <div class="sketch-single">
+      <div class="sketch-box">
+        <svg viewBox="0 0 700 520" xmlns="http://www.w3.org/2000/svg" style="font-family:monospace;">
+          <!-- NAV -->
+          <rect x="10" y="10" width="680" height="40" fill="none" stroke="#555" stroke-width="1.5" stroke-dasharray="4,2"/>
+          <text x="20" y="34" font-size="11" fill="#555">LOGO</text>
+          <text x="280" y="34" font-size="11" fill="#555">HOME | SHOP | ABOUT</text>
+          <text x="580" y="34" font-size="11" fill="#555">[CTA BTN]</text>
+          <text x="10" y="60" font-size="9" fill="#aaa">Navigation Bar (fixed)</text>
+
+          <!-- HERO -->
+          <rect x="10" y="65" width="680" height="200" fill="#f0f0f0" stroke="#999" stroke-width="1.5"/>
+          <text x="350" y="130" font-size="11" fill="#888" text-anchor="middle">[ CROSS WATERMARK — background ]</text>
+          <text x="350" y="155" font-size="22" fill="#333" text-anchor="middle" font-weight="bold">MELLERMA</text>
+          <text x="350" y="175" font-size="10" fill="#888" text-anchor="middle">— A Unified Mindset —</text>
+          <text x="350" y="198" font-size="10" fill="#aaa" text-anchor="middle">tagline text / manifesto snippet</text>
+          <rect x="260" y="210" width="80" height="22" fill="none" stroke="#555" stroke-width="1"/>
+          <text x="300" y="225" font-size="9" fill="#555" text-anchor="middle">SHOP NOW</text>
+          <rect x="360" y="210" width="80" height="22" fill="none" stroke="#aaa" stroke-width="1"/>
+          <text x="400" y="225" font-size="9" fill="#aaa" text-anchor="middle">OUR STORY</text>
+          <text x="10" y="278" font-size="9" fill="#aaa">Hero Section (full viewport height)</text>
+
+          <!-- MARQUEE -->
+          <rect x="10" y="280" width="680" height="24" fill="#e8e8e8" stroke="#bbb" stroke-width="1"/>
+          <text x="350" y="296" font-size="9" fill="#888" text-anchor="middle">— scrolling text marquee — LOWKEY MOVEMENT ✦ HIGH AMBITION ✦ TRUST GOD ✦</text>
+
+          <!-- PRODUCTS -->
+          <rect x="10" y="315" width="335" height="140" fill="#e8e8e8" stroke="#bbb" stroke-width="1.5"/>
+          <text x="178" y="375" font-size="10" fill="#888" text-anchor="middle">PRODUCT CARD 1</text>
+          <text x="178" y="393" font-size="9" fill="#aaa" text-anchor="middle">Trust God Tee</text>
+          <rect x="355" y="315" width="335" height="140" fill="#e8e8e8" stroke="#bbb" stroke-width="1.5"/>
+          <text x="522" y="375" font-size="10" fill="#888" text-anchor="middle">PRODUCT CARD 2</text>
+          <text x="522" y="393" font-size="9" fill="#aaa" text-anchor="middle">Thorns &amp; Steel Sweats</text>
+          <text x="10" y="468" font-size="9" fill="#aaa">Product Preview Grid (2 col)</text>
+
+          <!-- MANIFESTO STRIP -->
+          <rect x="10" y="475" width="680" height="35" fill="#e0e0e0" stroke="#bbb" stroke-width="1"/>
+          <text x="350" y="497" font-size="10" fill="#777" text-anchor="middle">"Not made to follow trends. Made to create our own lane." — brand quote strip</text>
+        </svg>
+      </div>
+      <div class="sketch-caption">Fig. 1 — Homepage layout sketch showing nav, hero, marquee, product grid, and manifesto strip</div>
+    </div>
+
+    <h3>Product Page Layout</h3>
+    <div class="sketch-single">
+      <div class="sketch-box">
+        <svg viewBox="0 0 700 480" xmlns="http://www.w3.org/2000/svg">
+          <!-- NAV -->
+          <rect x="10" y="10" width="680" height="36" fill="none" stroke="#555" stroke-width="1.5" stroke-dasharray="4,2"/>
+          <text x="20" y="32" font-size="10" fill="#555">LOGO</text>
+          <text x="560" y="32" font-size="10" fill="#555">[← BACK TO SHOP]</text>
+
+          <!-- LEFT: GALLERY -->
+          <rect x="10" y="55" width="380" height="320" fill="#e8e8e8" stroke="#bbb" stroke-width="1.5"/>
+          <text x="200" y="200" font-size="11" fill="#999" text-anchor="middle">MAIN PRODUCT IMAGE</text>
+          <text x="200" y="218" font-size="9" fill="#bbb" text-anchor="middle">(click = zoom lightbox)</text>
+          <!-- thumbs -->
+          <rect x="10" y="382" width="88" height="56" fill="#ddd" stroke="#bbb" stroke-width="1"/>
+          <rect x="106" y="382" width="88" height="56" fill="#ddd" stroke="#bbb" stroke-width="1"/>
+          <rect x="202" y="382" width="88" height="56" fill="#ddd" stroke="#bbb" stroke-width="1"/>
+          <rect x="298" y="382" width="88" height="56" fill="#ddd" stroke="#bbb" stroke-width="1"/>
+          <text x="200" y="455" font-size="9" fill="#aaa" text-anchor="middle">Thumbnail strip (4 images)</text>
+
+          <!-- RIGHT: DETAILS -->
+          <text x="410" y="80" font-size="9" fill="#b8943f">DROP 001 · SACRED STREETWEAR</text>
+          <text x="410" y="106" font-size="18" fill="#333" font-weight="bold">PRODUCT NAME</text>
+          <text x="410" y="124" font-size="10" fill="#888" font-style="italic">tagline / descriptor</text>
+          <text x="410" y="150" font-size="20" fill="#b8943f" font-weight="bold">$XX</text>
+          <line x1="410" y1="162" x2="685" y2="162" stroke="#ccc" stroke-width="1"/>
+          <!-- spec bullets -->
+          <text x="418" y="182" font-size="10" fill="#555">• Spec line 1</text>
+          <text x="418" y="198" font-size="10" fill="#555">• Spec line 2</text>
+          <text x="418" y="214" font-size="10" fill="#555">• Spec line 3</text>
+          <text x="418" y="230" font-size="10" fill="#555">• Spec line 4</text>
+          <text x="418" y="246" font-size="10" fill="#555">• Spec line 5</text>
+          <line x1="410" y1="258" x2="685" y2="258" stroke="#ccc" stroke-width="1"/>
+          <!-- sizes -->
+          <text x="410" y="276" font-size="9" fill="#999">SELECT SIZE</text>
+          <rect x="410" y="284" width="36" height="32" fill="none" stroke="#999" stroke-width="1"/>
+          <rect x="452" y="284" width="36" height="32" fill="none" stroke="#999" stroke-width="1"/>
+          <rect x="494" y="284" width="36" height="32" fill="none" stroke="#999" stroke-width="1"/>
+          <rect x="536" y="284" width="36" height="32" fill="none" stroke="#999" stroke-width="1"/>
+          <text x="428" y="304" font-size="9" fill="#777" text-anchor="middle">XS</text>
+          <text x="470" y="304" font-size="9" fill="#777" text-anchor="middle">S</text>
+          <text x="512" y="304" font-size="9" fill="#777" text-anchor="middle">M</text>
+          <text x="554" y="304" font-size="9" fill="#777" text-anchor="middle">L</text>
+          <!-- buttons -->
+          <rect x="410" y="328" width="275" height="36" fill="#333" stroke="none"/>
+          <text x="547" y="350" font-size="10" fill="#fff" text-anchor="middle">PURCHASE — $XX</text>
+          <rect x="410" y="370" width="275" height="32" fill="none" stroke="#999" stroke-width="1"/>
+          <text x="547" y="390" font-size="10" fill="#999" text-anchor="middle">NOTIFY ME WHEN AVAILABLE</text>
+          <!-- accordions -->
+          <rect x="410" y="415" width="275" height="24" fill="none" stroke="#ddd" stroke-width="1"/>
+          <text x="418" y="431" font-size="9" fill="#666">Fabric &amp; Construction  +</text>
+          <rect x="410" y="441" width="275" height="24" fill="none" stroke="#ddd" stroke-width="1"/>
+          <text x="418" y="457" font-size="9" fill="#666">Shipping &amp; Returns  +</text>
+        </svg>
+      </div>
+      <div class="sketch-caption">Fig. 2 — Product detail page: sticky image gallery (left) + product info, specs, size selector, buttons, accordions (right)</div>
+    </div>
+
+    <h3>Checkout Page Layout</h3>
+    <div class="sketch-single">
+      <div class="sketch-box">
+        <svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+          <!-- NAV -->
+          <rect x="10" y="10" width="680" height="34" fill="none" stroke="#555" stroke-width="1.5" stroke-dasharray="4,2"/>
+          <text x="20" y="31" font-size="10" fill="#555">LOGO</text>
+          <text x="560" y="31" font-size="10" fill="#555">← BACK TO PRODUCT</text>
+
+          <!-- LEFT: ORDER SUMMARY -->
+          <rect x="10" y="54" width="320" height="330" fill="#efefef" stroke="#bbb" stroke-width="1.5"/>
+          <text x="170" y="78" font-size="9" fill="#b8943f" text-anchor="middle">YOUR ORDER</text>
+          <!-- product row -->
+          <rect x="24" y="88" width="64" height="78" fill="#ddd" stroke="#ccc" stroke-width="1"/>
+          <text x="108" y="108" font-size="10" fill="#444">Product Name</text>
+          <text x="108" y="124" font-size="9" fill="#999">Size: M</text>
+          <line x1="24" y1="180" x2="312" y2="180" stroke="#ccc" stroke-width="1"/>
+          <text x="24" y="200" font-size="9" fill="#888">SUBTOTAL</text>
+          <text x="312" y="200" font-size="9" fill="#666" text-anchor="end">$25.00</text>
+          <text x="24" y="218" font-size="9" fill="#888">SHIPPING</text>
+          <text x="312" y="218" font-size="9" fill="#666" text-anchor="end">Free (US)</text>
+          <line x1="24" y1="228" x2="312" y2="228" stroke="#ccc" stroke-width="1"/>
+          <text x="24" y="250" font-size="10" fill="#444" font-weight="bold">TOTAL</text>
+          <text x="312" y="250" font-size="14" fill="#b8943f" text-anchor="end" font-weight="bold">$25.00</text>
+          <rect x="24" y="268" width="288" height="48" fill="#e8f5e9" stroke="#aed581" stroke-width="1"/>
+          <text x="170" y="296" font-size="9" fill="#558b2f" text-anchor="middle">🔒 Secured by PayPal</text>
+
+          <!-- RIGHT: PAYMENT FORM -->
+          <rect x="345" y="54" width="345" height="330" fill="#fff" stroke="#ddd" stroke-width="1.5"/>
+          <text x="362" y="80" font-size="9" fill="#b8943f">CONTACT ─────────────────</text>
+          <rect x="362" y="90" width="310" height="28" fill="#f8f8f8" stroke="#ddd" stroke-width="1"/>
+          <text x="370" y="108" font-size="9" fill="#bbb">Email address</text>
+
+          <text x="362" y="138" font-size="9" fill="#b8943f">SHIPPING ADDRESS ──────────</text>
+          <rect x="362" y="148" width="148" height="24" fill="#f8f8f8" stroke="#ddd" stroke-width="1"/>
+          <rect x="518" y="148" width="154" height="24" fill="#f8f8f8" stroke="#ddd" stroke-width="1"/>
+          <rect x="362" y="178" width="310" height="24" fill="#f8f8f8" stroke="#ddd" stroke-width="1"/>
+          <rect x="362" y="208" width="148" height="24" fill="#f8f8f8" stroke="#ddd" stroke-width="1"/>
+          <rect x="518" y="208" width="154" height="24" fill="#f8f8f8" stroke="#ddd" stroke-width="1"/>
+
+          <text x="362" y="252" font-size="9" fill="#b8943f">PAYMENT METHOD ─────────</text>
+          <!-- payment tabs -->
+          <rect x="362" y="260" width="96" height="32" fill="#fffdf0" stroke="#b8943f" stroke-width="1.5"/>
+          <text x="410" y="280" font-size="8" fill="#b8943f" text-anchor="middle">💳 CARD</text>
+          <rect x="464" y="260" width="96" height="32" fill="#f8f8f8" stroke="#ddd" stroke-width="1"/>
+          <text x="512" y="280" font-size="8" fill="#999" text-anchor="middle">PAYPAL</text>
+          <rect x="566" y="260" width="106" height="32" fill="#f8f8f8" stroke="#ddd" stroke-width="1"/>
+          <text x="619" y="280" font-size="8" fill="#999" text-anchor="middle">APPLE PAY</text>
+
+          <rect x="362" y="300" width="310" height="24" fill="#f8f8f8" stroke="#ddd" stroke-width="1"/>
+          <rect x="362" y="330" width="148" height="24" fill="#f8f8f8" stroke="#ddd" stroke-width="1"/>
+          <rect x="518" y="330" width="154" height="24" fill="#f8f8f8" stroke="#ddd" stroke-width="1"/>
+          <rect x="362" y="360" width="310" height="18" fill="#333"/>
+          <text x="517" y="373" font-size="9" fill="#fff" text-anchor="middle">PLACE ORDER</text>
+        </svg>
+      </div>
+      <div class="sketch-caption">Fig. 3 — Checkout page: order summary (left, sticky) + contact/shipping/payment form (right)</div>
+    </div>
+
+    <h3>Shop Page &amp; About Page Layouts</h3>
+    <div class="sketch-grid">
+      <div>
+        <div class="sketch-box">
+          <svg viewBox="0 0 340 380" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="8" width="324" height="30" fill="none" stroke="#555" stroke-width="1.5" stroke-dasharray="4,2"/>
+            <text x="16" y="27" font-size="9" fill="#555">NAV BAR</text>
+            <!-- Page header -->
+            <rect x="8" y="46" width="324" height="70" fill="#e8e8e8" stroke="#bbb" stroke-width="1"/>
+            <text x="170" y="72" font-size="11" fill="#666" text-anchor="middle" font-weight="bold">DEBUT DROP</text>
+            <text x="170" y="90" font-size="9" fill="#aaa" text-anchor="middle">Sacred streetwear. Built different.</text>
+            <text x="170" y="108" font-size="8" fill="#ccc" text-anchor="middle">[ scrolling marquee ]</text>
+
+            <!-- product grid header -->
+            <text x="16" y="138" font-size="9" fill="#b8943f">ALL PIECES ────────── 2 Pieces</text>
+
+            <!-- product cards -->
+            <rect x="8" y="148" width="157" height="130" fill="#ddd" stroke="#bbb" stroke-width="1"/>
+            <text x="87" y="208" font-size="9" fill="#999" text-anchor="middle">TEE IMAGE</text>
+            <rect x="8" y="282" width="157" height="22" fill="#f0f0f0" stroke="#ddd" stroke-width="1"/>
+            <text x="87" y="297" font-size="8" fill="#777" text-anchor="middle">Trust God Tee · $25</text>
+
+            <rect x="175" y="148" width="157" height="130" fill="#ddd" stroke="#bbb" stroke-width="1"/>
+            <text x="254" y="208" font-size="9" fill="#999" text-anchor="middle">PANTS IMAGE</text>
+            <rect x="175" y="282" width="157" height="22" fill="#f0f0f0" stroke="#ddd" stroke-width="1"/>
+            <text x="254" y="297" font-size="8" fill="#777" text-anchor="middle">Sweats · $35</text>
+
+            <!-- stats band -->
+            <rect x="8" y="316" width="324" height="36" fill="#e0e0e0" stroke="#ccc" stroke-width="1"/>
+            <text x="170" y="339" font-size="8" fill="#888" text-anchor="middle">STATS BAND — 320 GSM | 100% Cotton | Rhinestones | 2 Pieces</text>
+
+            <!-- insta grid -->
+            <text x="16" y="368" font-size="8" fill="#aaa">[ Instagram photo grid — 3×2 ]</text>
+          </svg>
+        </div>
+        <div class="sketch-caption">Fig. 4 — Shop page layout</div>
+      </div>
+      <div>
+        <div class="sketch-box">
+          <svg viewBox="0 0 340 380" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="8" width="324" height="30" fill="none" stroke="#555" stroke-width="1.5" stroke-dasharray="4,2"/>
+            <text x="16" y="27" font-size="9" fill="#555">NAV BAR</text>
+            <!-- about hero -->
+            <rect x="8" y="46" width="324" height="64" fill="#e8e8e8" stroke="#bbb" stroke-width="1"/>
+            <text x="170" y="72" font-size="11" fill="#555" text-anchor="middle" font-weight="bold">NOT MADE TO FOLLOW TRENDS</text>
+            <text x="170" y="90" font-size="8" fill="#aaa" text-anchor="middle">"Made to create our own lane..."</text>
+            <!-- mission 2 col -->
+            <rect x="8" y="120" width="155" height="90" fill="#fff" stroke="#ddd" stroke-width="1"/>
+            <text x="86" y="145" font-size="8" fill="#b8943f" text-anchor="middle">THE MOVEMENT</text>
+            <text x="86" y="162" font-size="8" fill="#999" text-anchor="middle">brand story text</text>
+            <text x="86" y="176" font-size="8" fill="#bbb" text-anchor="middle">paragraph...</text>
+            <rect x="173" y="120" width="155" height="90" fill="#e8e8e8" stroke="#ddd" stroke-width="1"/>
+            <text x="250" y="170" font-size="8" fill="#aaa" text-anchor="middle">model photo</text>
+            <!-- pillars -->
+            <text x="16" y="228" font-size="8" fill="#b8943f">FOUR PILLARS ─────────────</text>
+            <rect x="8" y="236" width="155" height="52" fill="#f5f5f5" stroke="#ddd" stroke-width="1"/>
+            <text x="86" y="255" font-size="9" fill="#555" text-anchor="middle">01 UNITY</text>
+            <text x="86" y="272" font-size="7" fill="#aaa" text-anchor="middle">description text...</text>
+            <rect x="173" y="236" width="155" height="52" fill="#f5f5f5" stroke="#ddd" stroke-width="1"/>
+            <text x="250" y="255" font-size="9" fill="#555" text-anchor="middle">02 PURPOSE</text>
+            <text x="250" y="272" font-size="7" fill="#aaa" text-anchor="middle">description text...</text>
+            <rect x="8" y="294" width="155" height="52" fill="#f5f5f5" stroke="#ddd" stroke-width="1"/>
+            <text x="86" y="313" font-size="9" fill="#555" text-anchor="middle">03 QUALITY</text>
+            <rect x="173" y="294" width="155" height="52" fill="#f5f5f5" stroke="#ddd" stroke-width="1"/>
+            <text x="250" y="313" font-size="9" fill="#555" text-anchor="middle">04 FAITH</text>
+            <!-- manifesto -->
+            <rect x="8" y="354" width="324" height="20" fill="#e0e0e0" stroke="#ccc" stroke-width="1"/>
+            <text x="170" y="368" font-size="8" fill="#888" text-anchor="middle">full manifesto quote strip</text>
+          </svg>
+        </div>
+        <div class="sketch-caption">Fig. 5 — About page layout</div>
+      </div>
+    </div>
+
+    <h3>Zoom Lightbox Feature Sketch</h3>
+    <div class="sketch-single">
+      <div class="sketch-box">
+        <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+          <!-- screen bg -->
+          <rect x="8" y="8" width="684" height="284" fill="#1a1a1a" stroke="#444" stroke-width="1.5"/>
+          <!-- zoomed image -->
+          <rect x="80" y="30" width="500" height="240" fill="#2a2a2a" stroke="#555" stroke-width="1"/>
+          <text x="330" y="145" font-size="11" fill="#666" text-anchor="middle">PRODUCT IMAGE — ZOOMED IN</text>
+          <text x="330" y="163" font-size="9" fill="#444" text-anchor="middle">(transform-origin follows mouse position)</text>
+          <!-- close btn -->
+          <text x="660" y="36" font-size="16" fill="#888">✕</text>
+          <!-- minimap -->
+          <rect x="598" y="90" width="80" height="104" fill="#111" stroke="#b8943f" stroke-width="1.5"/>
+          <rect x="598" y="90" width="80" height="104" fill="none"/>
+          <rect x="598" y="90" width="80" height="104" fill="#2a2a2a"/>
+          <text x="638" y="136" font-size="7" fill="#666" text-anchor="middle">[ mini</text>
+          <text x="638" y="148" font-size="7" fill="#666" text-anchor="middle">thumb ]</text>
+          <!-- viewport dot -->
+          <rect x="616" y="102" width="18" height="22" fill="none" stroke="#d4af6a" stroke-width="1.5"/>
+          <text x="638" y="200" font-size="7" fill="#b8943f" text-anchor="middle">NAVIGATOR</text>
+          <!-- hint text -->
+          <text x="330" y="276" font-size="8" fill="#444" text-anchor="middle">Click to zoom · Move mouse to pan · ESC to close</text>
+          <!-- mouse cursor indicator -->
+          <circle cx="280" cy="140" r="4" fill="none" stroke="#d4af6a" stroke-width="1.5"/>
+          <line x1="275" y1="140" x2="265" y2="140" stroke="#d4af6a" stroke-width="1"/>
+          <line x1="285" y1="140" x2="295" y2="140" stroke="#d4af6a" stroke-width="1"/>
+          <line x1="280" y1="135" x2="280" y2="125" stroke="#d4af6a" stroke-width="1"/>
+          <line x1="280" y1="145" x2="280" y2="155" stroke="#d4af6a" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="sketch-caption">Fig. 6 — Zoom lightbox: full-screen overlay with pan-on-hover and minimap navigator showing current viewport position</div>
+    </div>
+  </div>
+
+  <!-- 6. VISUAL DESIGN SYSTEM -->
+  <div class="doc-section" id="visual">
+    <h2>6. Visual Design System</h2>
+
+    <h3>Color Palette</h3>
+    <div class="palette">
+      <div class="swatch" style="background:#060606;"><span>#060606<br>Black</span></div>
+      <div class="swatch" style="background:#161616;"><span>#161616<br>Dark Grey</span></div>
+      <div class="swatch" style="background:#2a2a2a;"><span>#2a2a2a<br>Mid Grey</span></div>
+      <div class="swatch" style="background:#b8943f;"><span>#b8943f<br>Gold</span></div>
+      <div class="swatch" style="background:#d4af6a;"><span>#d4af6a<br>Gold Light</span></div>
+      <div class="swatch light" style="background:#f0ece4;border:1px solid #ddd;"><span style="color:#555;">#f0ece4<br>Off White</span></div>
+      <div class="swatch" style="background:#8b0000;"><span>#8b0000<br>Deep Red</span></div>
+    </div>
+    <p>The palette is intentionally minimal — near-black backgrounds with gold accents create a premium, editorial feel. Deep red is used sparingly for product badges and marquee separators. Off-white for body text maintains readability without the harshness of pure white on black.</p>
+
+    <h3>Typography</h3>
+    <table class="type-table">
+      <thead>
+        <tr><th>Role</th><th>Font</th><th>Weight / Style</th><th>Usage</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Display / Hero</td>
+          <td>Bebas Neue</td>
+          <td>400 Regular</td>
+          <td>Page titles, product names, hero heading, section titles. Large, condensed, impactful.</td>
+        </tr>
+        <tr>
+          <td>Brand / Wordmark</td>
+          <td>Cinzel</td>
+          <td>900 Black</td>
+          <td>Navigation logo, product names in cards, modal titles, checkout headings. Serif authority.</td>
+        </tr>
+        <tr>
+          <td>Editorial / Accent</td>
+          <td>Cormorant Garamond</td>
+          <td>300–400, Italic</td>
+          <td>Taglines, pull quotes, manifesto text, product taglines. Elegant contrast to bold display type.</td>
+        </tr>
+        <tr>
+          <td>Body / UI</td>
+          <td>DM Sans</td>
+          <td>300–500</td>
+          <td>All body text, labels, form fields, navigation links, spec lists. Clean and highly legible.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Design Principles</h3>
+    <ul>
+      <li><strong>Dark first:</strong> Near-black backgrounds on every page. The darkness gives the gold accents their impact.</li>
+      <li><strong>Minimal but detailed:</strong> Simple layouts with high-detail micro elements — noise texture overlay, thin gold borders, rhinestone references in UI.</li>
+      <li><strong>Editorial spacing:</strong> Generous padding and whitespace. Content breathes. Nothing feels cramped.</li>
+      <li><strong>Sticky navigation:</strong> Fixed nav bar on every page with a frosted glass blur effect for depth.</li>
+      <li><strong>Scroll reveals:</strong> Content fades up into view using IntersectionObserver for a polished feel.</li>
+      <li><strong>Consistent iconography:</strong> The circle cross logo appears as a watermark on the homepage hero and as a subtle presence throughout.</li>
+    </ul>
+  </div>
+
+  <!-- 7. CONTENT PLAN -->
+  <div class="doc-section" id="content">
+    <h2>7. Content Plan</h2>
+    <p>The following outlines every piece of content included on the site, organized by page.</p>
+
+    <div class="content-block">
+      <div class="cb-page">index.html — Homepage</div>
+      <div class="cb-title">Content Included</div>
+      <div class="cb-items">
+        Brand logo (circle cross SVG watermark) · Hero headline "MELLERMA" · Subtitle "A Unified Mindset" · 3-line brand tagline · Two CTA buttons (Shop / Our Story) · Scrolling marquee with 8 rotating brand phrases · Two product preview cards with hover overlay · Brand manifesto quote block · Six philosophy tags · Email signup form with notification CTA
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="cb-page">shop.html — Shop Page</div>
+      <div class="cb-title">Content Included</div>
+      <div class="cb-items">
+        Page header with collection label · Scrolling marquee · Product grid (2 cards with name, sub-label, price, hover overlay) · Stats band (320 GSM / 100% Cotton / Rhinestones / 2 Pieces) · Instagram-style 6-photo grid with hover effect · @mellerma.wrld handle display
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="cb-page">product-tee.html &amp; product-pants.html — Product Pages</div>
+      <div class="cb-title">Content Included</div>
+      <div class="cb-items">
+        Breadcrumb navigation · Collection label · Product name + tagline · Price · 5-point spec list · Size selector (XS–XXL) with size guide · Purchase CTA button · Notify me button · Three expandable accordions (Fabric, Shipping, Care) · 4-image sticky gallery with thumbnail strip · Zoom lightbox with minimap navigator · Related product section
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="cb-page">checkout-tee.html &amp; checkout-pants.html — Checkout Pages</div>
+      <div class="cb-title">Content Included</div>
+      <div class="cb-items">
+        Order summary (product image, name, size, price, shipping, total) · SSL security badge · Contact form (email) · Shipping address form (name, address, city, zip, state, country) · Payment method tabs (Card / PayPal / Apple Pay) · Stripe card fields (number, expiry, CVC, name) · Live PayPal button (SDK integrated) · Order confirmation success state · Legal links
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="cb-page">about.html — About Page</div>
+      <div class="cb-title">Content Included</div>
+      <div class="cb-items">
+        Hero statement headline · Brand origin paragraph (2) · Four brand pillars (Unity, Purpose, Quality, Faith) with full descriptions · Full manifesto text block · Community photo grid (3 images) · Drop 001 collection overview · Contact section with email and social links
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="cb-page">legal.html — Legal &amp; Copyright</div>
+      <div class="cb-title">Content Included</div>
+      <div class="cb-items">
+        4-tab navigation · Copyright section (brand ownership, protected elements, what you can/cannot do, licensing) · Privacy Policy (data collection, usage, rights, cookies) · Terms of Service (website use, products, payments, liability) · Returns &amp; Shipping policy (shipping times, rates, return window, process, exchanges, damaged items)
+      </div>
+    </div>
+
+    <h3>Product Photography Used</h3>
+    <ul>
+      <li><code>model_front.jpg</code> — Model wearing full outfit, front view</li>
+      <li><code>model_back.jpg</code> — Model wearing Trust God Tee, back view showing Crown of Thorns graphic</li>
+      <li><code>tshirt_front.jpg</code> — Flat lay, Trust God Tee front with Mellerma emblem</li>
+      <li><code>tshirt_back.jpg</code> — Flat lay, Trust God Tee back with full graphic</li>
+      <li><code>pants_front.jpg</code> — Flat lay, Thorns &amp; Steel Sweatpants front with rhinestone sword graphic</li>
+      <li><code>pants_back.jpg</code> — Flat lay, Thorns &amp; Steel Sweatpants back with Mellerma logo pocket</li>
+      <li><code>logo.png</code> — Mellerma circle cross logo mark</li>
+      <li><code>beach_model.png</code> — Lifestyle/editorial shot</li>
+    </ul>
+  </div>
+
+  <!-- 8. TECH STACK -->
+  <div class="doc-section" id="tech">
+    <h2>8. Technical Stack</h2>
+    <p>The entire site is built with vanilla web technologies — no frameworks, no build tools, no CMS. This was a deliberate choice to demonstrate fundamental web development skills and maintain full control over every design detail.</p>
+
+    <div class="tech-grid">
+      <div class="tech-item">
+        <div class="ti-icon">🌐</div>
+        <div class="ti-name">HTML5</div>
+        <div class="ti-desc">Semantic structure for all 9 pages. Proper use of nav, section, article, footer elements.</div>
+      </div>
+      <div class="tech-item">
+        <div class="ti-icon">🎨</div>
+        <div class="ti-name">CSS3</div>
+        <div class="ti-desc">Custom properties, Grid, Flexbox, animations, IntersectionObserver-driven reveals, sticky positioning.</div>
+      </div>
+      <div class="tech-item">
+        <div class="ti-icon">⚙️</div>
+        <div class="ti-name">JavaScript</div>
+        <div class="ti-desc">Vanilla JS for zoom lightbox, image gallery, accordion menus, cart logic, form validation, toasts.</div>
+      </div>
+      <div class="tech-item">
+        <div class="ti-icon">💳</div>
+        <div class="ti-name">PayPal SDK</div>
+        <div class="ti-desc">Live PayPal Buttons integration via JS SDK. Real payment processing — no server required for PayPal.</div>
+      </div>
+      <div class="tech-item">
+        <div class="ti-icon">🔐</div>
+        <div class="ti-name">Stripe.js</div>
+        <div class="ti-desc">Stripe Elements loaded for future card processing. Currently inactive — server integration pending.</div>
+      </div>
+      <div class="tech-item">
+        <div class="ti-icon">📦</div>
+        <div class="ti-name">GitHub Pages</div>
+        <div class="ti-desc">Static site hosting via GitHub Pages. Free, reliable, deploys directly from the main branch.</div>
+      </div>
+    </div>
+
+    <h3>External Resources</h3>
+    <ul>
+      <li><strong>Google Fonts</strong> — Bebas Neue, Cinzel, Cormorant Garamond, DM Sans (loaded via CDN)</li>
+      <li><strong>PayPal JS SDK</strong> — <code>https://www.paypal.com/sdk/js</code> (live integration)</li>
+      <li><strong>Stripe.js v3</strong> — <code>https://js.stripe.com/v3/</code> (loaded but inactive)</li>
+      <li><strong>All images</strong> — Self-hosted in the GitHub repo root directory</li>
+    </ul>
+  </div>
+
+  <!-- 9. FEATURES -->
+  <div class="doc-section" id="features">
+    <h2>9. Features &amp; Functionality</h2>
+
+    <h3>Navigation</h3>
+    <ul>
+      <li>Fixed navigation bar on all pages with backdrop blur</li>
+      <li>Active state highlighting on current page</li>
+      <li>Responsive — nav links hidden on mobile, replaced with context-appropriate button</li>
+      <li>Smooth scroll to sections on same-page anchor links</li>
+    </ul>
+
+    <h3>Product Gallery &amp; Zoom</h3>
+    <ul>
+      <li>Sticky image gallery on product pages — stays in view while scrolling specs</li>
+      <li>4-thumbnail strip — click any thumbnail to swap main image with preload to prevent blackout</li>
+      <li>Click main image → full-screen zoom lightbox opens</li>
+      <li>Click in lightbox → zooms in 3× at the exact click point</li>
+      <li>Move mouse → image pans to follow cursor (container-relative tracking to prevent edge-lock)</li>
+      <li>Scroll wheel → smooth zoom level adjustment (1× to 3.5×)</li>
+      <li>Minimap navigator → thumbnail in corner with gold box showing current viewport position</li>
+      <li>ESC key or click outside → closes lightbox</li>
+    </ul>
+
+    <h3>Checkout</h3>
+    <ul>
+      <li>Size selection on product page passed to checkout via URL parameter</li>
+      <li>Country selector dynamically updates shipping cost display</li>
+      <li>Three payment method tabs: Card, PayPal, Apple/Google Pay</li>
+      <li>PayPal Buttons SDK — live, real payment capture</li>
+      <li>Stripe card fields — UI complete, server integration pending for live card processing</li>
+      <li>Form validation before submission</li>
+      <li>Order confirmed success state with customer email display</li>
+    </ul>
+
+    <h3>Scroll Reveals</h3>
+    <ul>
+      <li>IntersectionObserver watches all <code>.reveal</code> elements</li>
+      <li>Fades in + translates up when element enters viewport</li>
+      <li>Used on all major content sections across the site</li>
+    </ul>
+
+    <h3>Legal Pages</h3>
+    <ul>
+      <li>Tab-based navigation (Copyright, Privacy, Terms, Returns)</li>
+      <li>Hash-based deep linking (e.g. <code>legal.html#privacy</code>)</li>
+      <li>Full content for all four policy sections</li>
+      <li>Linked from footer of every page and from checkout small print</li>
+    </ul>
+  </div>
+
+  <!-- 10. TIMELINE -->
+  <div class="doc-section" id="timeline">
+    <h2>10. Development Timeline</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-phase">Phase 1<br>Planning</div>
+        <div class="tl-desc">Defined brand identity, site structure, and content requirements. Created wireframe sketches for all major pages. Established color palette, typography choices, and design principles. Wrote content for all pages.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-phase">Phase 2<br>Base Build</div>
+        <div class="tl-desc">Built homepage, shop page, and about page. Established shared CSS variables, nav component, footer component, and overall dark-theme design system. Set up GitHub Pages hosting and repo structure.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-phase">Phase 3<br>Product Pages</div>
+        <div class="tl-desc">Built both product detail pages with sticky gallery, spec lists, size selectors, accordion menus, and purchase flow. Implemented image preloading to fix thumbnail blackout bug. Corrected all image filenames to match GitHub repo.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-phase">Phase 4<br>Zoom Feature</div>
+        <div class="tl-desc">Designed and implemented the zoom lightbox system. First version used transform-origin on the image element — caused edge-lock glitch. Rewrote to track mouse on the container element instead. Added minimap navigator with position dot. Fixed syntax error from orphaned code block.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-phase">Phase 5<br>Checkout &amp; Payments</div>
+        <div class="tl-desc">Built dedicated checkout pages for each product. Integrated PayPal JS SDK with live Client ID for real payment capture. Integrated Stripe Elements UI for future card processing. Built order confirmation success state.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-phase">Phase 6<br>Legal &amp; Polish</div>
+        <div class="tl-desc">Created legal.html with four full policy sections. Added legal links to all page footers. Updated all dates to 2026. Fixed footer link visibility (color contrast). Final cross-browser testing and bug fixes.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-phase">Phase 7<br>Launch Prep</div>
+        <div class="tl-desc">Currently in progress. Remaining: switch PayPal from Sandbox to Live mode, add remaining product content, complete Stripe server integration for card payments, final mobile responsiveness review.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11. TESTING -->
+  <div class="doc-section" id="testing">
+    <h2>11. Testing &amp; QA</h2>
+
+    <h3>Browser Testing</h3>
+    <ul>
+      <li>Google Chrome (primary development browser) — fully tested</li>
+      <li>Microsoft Edge — layout verified, all features functional</li>
+      <li>Firefox — tested, minor font rendering differences, no functional issues</li>
+      <li>Mobile Chrome (Android) — responsive layout verified</li>
+    </ul>
+
+    <h3>Functionality Testing</h3>
+    <ul>
+      <li>All nav links verified across all 9 pages</li>
+      <li>Thumbnail image switching — tested all four images on both product pages, no blackout</li>
+      <li>Zoom lightbox — click to open, click to zoom, mouse pan, scroll zoom, ESC to close, minimap updates</li>
+      <li>Size selector — selection state, URL parameter passing to checkout</li>
+      <li>PayPal button — renders correctly in Sandbox mode, full order flow tested</li>
+      <li>Accordion menus — open/close, only one open at a time</li>
+      <li>Scroll reveals — trigger correctly on scroll, no double-fire</li>
+      <li>Footer legal links — verified on all pages</li>
+      <li>Email subscribe form — validation for missing/invalid email</li>
+    </ul>
+
+    <h3>Known Limitations</h3>
+    <ul>
+      <li>Card payments (Stripe) are UI-only — server backend required for live processing</li>
+      <li>PayPal currently in Sandbox mode — live switch needed before public launch</li>
+      <li>No email backend — subscribe form shows a toast notification but does not send data to a server</li>
+      <li>No inventory management — stock is not tracked, orders are not stored in a database</li>
+    </ul>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="border-top:2px solid #111;margin-top:48px;padding-top:24px;display:flex;justify-content:space-between;align-items:center;">
+    <div style="font-size:12px;color:#999;">MELLERMA — Project Documentation · 2026</div>
+    <div style="font-size:12px;color:#999;">mellerma_wrld2026@gmail.com</div>
+  </div>
+
+</div>
+</body>
+</html>
